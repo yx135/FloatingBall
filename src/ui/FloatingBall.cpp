@@ -8,11 +8,13 @@
 FloatingBall::FloatingBall(QWidget *parent) : QWidget(parent) {
     setupUI();
     setupButtons();
-    screenshotManager = new ScreenshotManager(this);
+    
     
     // 连接截图按钮
-    connect(screenshotButton, &QPushButton::clicked, 
-            screenshotManager, &ScreenshotManager::startScreenshot);
+    connect(screenshotButton, &QPushButton::clicked, [this](){
+        screenshotManager = new ScreenshotManager(this);
+        screenshotManager->startScreenshot();
+    });
 
     connect(chatButton, &QPushButton::clicked,[this](){
         qDebug()<<"构建aichat";
@@ -48,7 +50,7 @@ void FloatingBall::setupUI() {
     // 设置固定初始大小
     setFixedSize(COLLAPSED_SIZE);
     
-    // 移动到屏幕右上角
+    // 移动到屏幕右中角
     if (QScreen *screen = QApplication::primaryScreen()) {
         QRect screenGeometry = screen->geometry();
        int centerY = (screenGeometry.height() - height()) /3;
@@ -58,7 +60,9 @@ void FloatingBall::setupUI() {
     
     // 创建主布局
     mainLayout = new QVBoxLayout(this);
+    //设置主布局的边距
     mainLayout->setContentsMargins(5, 5, 5, 5);
+    //设置主布局的间距
     mainLayout->setSpacing(5);
     
     // 初始化双击定时器
@@ -67,10 +71,11 @@ void FloatingBall::setupUI() {
     connect(doubleClickTimer, &QTimer::timeout, this, &FloatingBall::handleSingleClick);
     
     // 初始化动画
+    /*
     sizeAnimation = new QPropertyAnimation(this, "size");
     sizeAnimation->setDuration(300);
     sizeAnimation->setEasingCurve(QEasingCurve::OutCubic);
-
+    */
 
 }
 
@@ -78,21 +83,16 @@ void FloatingBall::setupButtons() {
     screenshotButton = new QPushButton("截图", this);
     chatButton = new QPushButton("聊天", this);
     
-    // 设置按钮样式
-    QString buttonStyle = 
-        "QPushButton {"
-        "    background-color: rgba(255, 255, 255, 180);"
-        "    border: none;"
-        "    border-radius: 10px;"
-        "    padding: 5px;"
-        "    color: black;"
-        "}"
-        "QPushButton:hover {"
-        "    background-color: rgba(255, 255, 255, 220);"
-        "}";
-    
-    screenshotButton->setStyleSheet(buttonStyle);
-    chatButton->setStyleSheet(buttonStyle);
+    //从文件读取样式
+    QString buttonStyle = readStyleFromFile(":/resources/styles/style.qss");
+    //判断是否读取成功
+    if(buttonStyle.isEmpty()){
+        qWarning()<<"读取样式失败";
+    }
+    else{
+        screenshotButton->setStyleSheet(buttonStyle);
+        chatButton->setStyleSheet(buttonStyle);
+    }
     
     mainLayout->addWidget(screenshotButton);
     mainLayout->addWidget(chatButton);
@@ -124,21 +124,36 @@ void FloatingBall::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void FloatingBall::toggleExpansion() {
+    //获取屏幕
     QScreen *screen = QGuiApplication::primaryScreen();
+    //获取屏幕几何信息
     QRect screenGeometry = screen->geometry();
+    //获取全局坐标
     QPoint globalPos = mapToGlobal(QPoint(0, 0));
 
     if (!isExpanded) {
+        ballPos = globalPos;
         // 展开
         if (globalPos.x() < screenGeometry.width() / 2) {
             // 在左半边屏幕，向右展开
+            //如果在左下脚，向右上展开，
             setFixedSize(EXPANDED_SIZE);
+
+            if(globalPos.y() > screenGeometry.height() / 2){
+                move(globalPos.x(),
+                     globalPos.y() - (EXPANDED_SIZE.height() - COLLAPSED_SIZE.height()));
+            }
         } else {
             // 在右半边屏幕，向左展开
             QPoint newPos = globalPos;
             newPos.setX(globalPos.x() - (EXPANDED_SIZE.width() - COLLAPSED_SIZE.width()));
             move(newPos);
             setFixedSize(EXPANDED_SIZE);
+            //如果右下角，向左下展开，否则向左上展开
+            if(globalPos.y() > screenGeometry.height() / 2){
+                move(globalPos.x() - (EXPANDED_SIZE.width() - COLLAPSED_SIZE.width()),
+                     globalPos.y() - (EXPANDED_SIZE.height() - COLLAPSED_SIZE.height()));
+            }
         }
         screenshotButton->show();
         chatButton->show();
@@ -149,7 +164,8 @@ void FloatingBall::toggleExpansion() {
             newPos.setX(newPos.x() + (EXPANDED_SIZE.width() - COLLAPSED_SIZE.width()));
         }
         setFixedSize(COLLAPSED_SIZE);
-        move(newPos);
+       // move(newPos);
+        move(ballPos);
         screenshotButton->hide();
         chatButton->hide();
     }
@@ -158,16 +174,21 @@ void FloatingBall::toggleExpansion() {
     update();
 }
 void FloatingBall::handleSingleClick() {
+    //单击事件
     isWaitingForDoubleClick = false;
 }
 
 void FloatingBall::paintEvent(QPaintEvent *) {
+    //绘制事件
     QPainter painter(this);
+    //设置抗锯齿
     painter.setRenderHint(QPainter::Antialiasing);
-    
+    //设置画刷
     painter.setBrush(QColor(100, 100, 100, 180));
+    //设置画笔
     painter.setPen(Qt::NoPen);
     
+    //判断当前窗口大小，size()含义: 
     if (size() == COLLAPSED_SIZE) {
         // 完全收起状态，绘制圆形
         painter.drawEllipse(rect());
@@ -194,8 +215,10 @@ void FloatingBall::contextMenuEvent(QContextMenuEvent* event) {
     menu.addSeparator();
     menu.addAction("退出", qApp, &QApplication::quit);
     
+    //显示菜单
     menu.exec(event->globalPos());
 }
+//切换显示/隐藏
 void FloatingBall::toggleVisibility() {
     if (isVisible()) {
         hide();
@@ -282,5 +305,22 @@ void FloatingBall::applySettings() {
 void FloatingBall::updateGlobalShortcuts() {
  
     // 更新其他快捷键...
+}
+
+
+QString FloatingBall::readStyleFromFile(const QString &filePath)
+{
+    QFile file(filePath);
+    QString styleSheet;
+    
+    if (file.open(QFile::ReadOnly | QFile::Text)) {
+        QTextStream stream(&file);
+        styleSheet = stream.readAll();
+        file.close();
+    } else {
+        qDebug() << "无法打开样式文件:" << filePath;
+    }
+    
+    return styleSheet;
 }
 

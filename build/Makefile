@@ -17,7 +17,7 @@ CXX           = /Library/Developer/CommandLineTools/usr/bin/clang++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.13 -Wall -Wextra -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -stdlib=libc++ -DQ_OS_MAC -O2 -std=gnu++1y $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.13 -Wall -Wextra -fPIC $(DEFINES)
-INCPATH       = -I../../FloatingBall2 -I. -I../src -I../src/core -I../src/ui -I../../../../anaconda3/include/qt -I../../../../anaconda3/include/qt/QtWidgets -I../../../../anaconda3/include/qt/QtGui -I../../../../anaconda3/include/qt/QtNetwork -I../../../../anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/AGL.framework/Headers -I../../../../anaconda3/mkspecs/macx-clang
+INCPATH       = -I../../FloatingBall -I. -I../src -I../src/core -I../src/ui -I../../../../anaconda3/include/qt -I../../../../anaconda3/include/qt/QtWidgets -I../../../../anaconda3/include/qt/QtGui -I../../../../anaconda3/include/qt/QtNetwork -I../../../../anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/AGL.framework/Headers -I../../../../anaconda3/mkspecs/macx-clang
 QMAKE         = /Users/tp/anaconda3/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = FloatingBall1.0.0
-DISTDIR = /Users/tp/Documents/qt/FloatingBall2/build/.tmp/FloatingBall1.0.0
+DISTDIR = /Users/tp/Documents/qt/FloatingBall/build/.tmp/FloatingBall1.0.0
 LINK          = /Library/Developer/CommandLineTools/usr/bin/clang++
 LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.13 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/Users/tp/anaconda3/lib
 LIBS          = $(SUBLIBS) /Users/tp/anaconda3/lib/libQt5Widgets.dylib /Users/tp/anaconda3/lib/libQt5Gui.dylib /Users/tp/anaconda3/lib/libQt5Network.dylib /Users/tp/anaconda3/lib/libQt5Core.dylib -framework OpenGL -framework AGL   
@@ -331,7 +331,7 @@ EXPORT_QMAKE_XCODE_DEVELOPER_PATH = /Library/Developer/CommandLineTools
 EXPORT_VALID_ARCHS = arm64
 EXPORT_ACTIVE_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(ARCHS))
 EXPORT_ARCH_ARGS = $(foreach arch, $(if $(EXPORT_ACTIVE_ARCHS), $(EXPORT_ACTIVE_ARCHS), $(EXPORT_VALID_ARCHS)), -arch $(arch))
-EXPORT__PRO_FILE_ = /Users/tp/Documents/qt/FloatingBall2/FloatingBall.pro
+EXPORT__PRO_FILE_ = /Users/tp/Documents/qt/FloatingBall/FloatingBall.pro
 
 
 include /Users/tp/anaconda3/mkspecs/features/mac/sdk.mk
@@ -909,7 +909,7 @@ moc_ModuleBase.cpp: ../src/core/ModuleBase.h \
 		../../../../anaconda3/include/qt/QtCore/qobject_impl.h \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
-	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall2/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall2 -I/Users/tp/Documents/qt/FloatingBall2/src -I/Users/tp/Documents/qt/FloatingBall2/src/core -I/Users/tp/Documents/qt/FloatingBall2/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/core/ModuleBase.h -o moc_ModuleBase.cpp
+	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/core/ModuleBase.h -o moc_ModuleBase.cpp
 
 moc_ConfigManager.cpp: ../src/core/ConfigManager.h \
 		../src/core/ModuleBase.h \
@@ -983,7 +983,7 @@ moc_ConfigManager.cpp: ../src/core/ConfigManager.h \
 		../../../../anaconda3/include/qt/QtCore/QString \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
-	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall2/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall2 -I/Users/tp/Documents/qt/FloatingBall2/src -I/Users/tp/Documents/qt/FloatingBall2/src/core -I/Users/tp/Documents/qt/FloatingBall2/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/core/ConfigManager.h -o moc_ConfigManager.cpp
+	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/core/ConfigManager.h -o moc_ConfigManager.cpp
 
 moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtWidgets/QWidget \
@@ -1123,28 +1123,98 @@ moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtCore/QSettings \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
 		../../../../anaconda3/include/qt/QtCore/QString \
-		../src/modules/screenshot/ScreenshotManager.h \
-		../../../../anaconda3/include/qt/QtWidgets/QMessageBox \
-		../../../../anaconda3/include/qt/QtWidgets/qmessagebox.h \
-		../../../../anaconda3/include/qt/QtWidgets/qdialog.h \
-		../src/ui/SettingsDialog.h \
-		../../../../anaconda3/include/qt/QtWidgets/QDialog \
-		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
-		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
-		../../../../anaconda3/include/qt/QtWidgets/qframe.h \
-		../../../../anaconda3/include/qt/QtGui/qtextcursor.h \
-		../../../../anaconda3/include/qt/QtGui/qtextformat.h \
-		../../../../anaconda3/include/qt/QtGui/qpen.h \
-		../../../../anaconda3/include/qt/QtGui/qtextoption.h \
+		../src/modules/chat/ChatManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QMainWindow \
+		../../../../anaconda3/include/qt/QtWidgets/qmainwindow.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
 		../../../../anaconda3/include/qt/QtWidgets/QTextEdit \
 		../../../../anaconda3/include/qt/QtWidgets/qtextedit.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractscrollarea.h \
+		../../../../anaconda3/include/qt/QtWidgets/qframe.h \
 		../../../../anaconda3/include/qt/QtGui/qtextdocument.h \
+		../../../../anaconda3/include/qt/QtGui/qtextoption.h \
+		../../../../anaconda3/include/qt/QtGui/qtextcursor.h \
+		../../../../anaconda3/include/qt/QtGui/qtextformat.h \
+		../../../../anaconda3/include/qt/QtGui/qpen.h \
+		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
+		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkAccessManager \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkaccessmanager.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetworkglobal.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetwork-config.h \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkrequest.h \
+		../../../../anaconda3/include/qt/QtCore/QSharedDataPointer \
+		../../../../anaconda3/include/qt/QtCore/QUrl \
+		../../../../anaconda3/include/qt/QtCore/QVariant \
+		../../../../anaconda3/include/qt/QtCore/QVector \
+		../../../../anaconda3/include/qt/QtNetwork/QSslConfiguration \
+		../../../../anaconda3/include/qt/QtNetwork/qsslconfiguration.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtcpsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qabstractsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslerror.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslcertificate.h \
+		../../../../anaconda3/include/qt/QtCore/qcryptographichash.h \
+		../../../../anaconda3/include/qt/QtCore/qdatetime.h \
+		../../../../anaconda3/include/qt/QtNetwork/qssl.h \
+		../../../../anaconda3/include/qt/QtCore/QFlags \
+		../../../../anaconda3/include/qt/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../anaconda3/include/qt/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../anaconda3/include/qt/QtCore/QMetaType \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkReply \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkreply.h \
+		../../../../anaconda3/include/qt/QtCore/QIODevice \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkRequest \
+		../../../../anaconda3/include/qt/QtCore/QJsonDocument \
+		../../../../anaconda3/include/qt/QtCore/qjsondocument.h \
+		../../../../anaconda3/include/qt/QtCore/qjsonvalue.h \
+		../../../../anaconda3/include/qt/QtCore/qcborvalue.h \
+		../../../../anaconda3/include/qt/QtCore/qcborcommon.h \
+		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
+		../../../../anaconda3/include/qt/QtCore/quuid.h \
+		../../../../anaconda3/include/qt/QtCore/QJsonObject \
+		../../../../anaconda3/include/qt/QtCore/qjsonobject.h \
+		../../../../anaconda3/include/qt/QtCore/QJsonArray \
+		../../../../anaconda3/include/qt/QtCore/qjsonarray.h \
+		../../../../anaconda3/include/qt/QtWidgets/QListWidget \
+		../../../../anaconda3/include/qt/QtWidgets/qlistwidget.h \
+		../../../../anaconda3/include/qt/QtWidgets/qlistview.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemview.h \
+		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
+		../../../../anaconda3/include/qt/QtCore/qitemselectionmodel.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
+		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
+		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
+		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
+		../../../../anaconda3/include/qt/QtWidgets/QSplitter \
+		../../../../anaconda3/include/qt/QtWidgets/qsplitter.h \
+		../../../../anaconda3/include/qt/QtGui/QScreen \
+		../../../../anaconda3/include/qt/QtGui/qscreen.h \
+		../../../../anaconda3/include/qt/QtCore/QList \
+		../../../../anaconda3/include/qt/QtCore/QRect \
+		../../../../anaconda3/include/qt/QtCore/QSize \
+		../../../../anaconda3/include/qt/QtCore/QSizeF \
+		../../../../anaconda3/include/qt/QtGui/QTransform \
+		../../../../anaconda3/include/qt/QtCore/QDateTime \
+		../../../../anaconda3/include/qt/QtWidgets/QDialog \
+		../../../../anaconda3/include/qt/QtWidgets/qdialog.h \
+		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
+		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
+		../../../../anaconda3/include/qt/QtWidgets/QLabel \
+		../../../../anaconda3/include/qt/QtWidgets/qlabel.h \
+		../../../../anaconda3/include/qt/QtGui/QCloseEvent \
+		../src/modules/screenshot/ScreenshotManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QMessageBox \
+		../../../../anaconda3/include/qt/QtWidgets/qmessagebox.h \
+		../src/ui/SettingsDialog.h \
 		../../../../anaconda3/include/qt/QtWidgets/QCheckBox \
 		../../../../anaconda3/include/qt/QtWidgets/qcheckbox.h \
 		../../../../anaconda3/include/qt/QtWidgets/QSlider \
-		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
 		../../../../anaconda3/include/qt/QtWidgets/QStackedWidget \
 		../../../../anaconda3/include/qt/QtWidgets/qstackedwidget.h \
 		../../../../anaconda3/include/qt/QtWidgets/QFormLayout \
@@ -1152,7 +1222,7 @@ moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtWidgets/QLayout \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
-	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall2/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall2 -I/Users/tp/Documents/qt/FloatingBall2/src -I/Users/tp/Documents/qt/FloatingBall2/src/core -I/Users/tp/Documents/qt/FloatingBall2/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/ui/FloatingBall.h -o moc_FloatingBall.cpp
+	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/ui/FloatingBall.h -o moc_FloatingBall.cpp
 
 moc_SettingsDialog.cpp: ../src/ui/SettingsDialog.h \
 		../../../../anaconda3/include/qt/QtWidgets/QDialog \
@@ -1296,7 +1366,7 @@ moc_SettingsDialog.cpp: ../src/ui/SettingsDialog.h \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
-	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall2/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall2 -I/Users/tp/Documents/qt/FloatingBall2/src -I/Users/tp/Documents/qt/FloatingBall2/src/core -I/Users/tp/Documents/qt/FloatingBall2/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/ui/SettingsDialog.h -o moc_SettingsDialog.cpp
+	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/ui/SettingsDialog.h -o moc_SettingsDialog.cpp
 
 moc_ScreenshotManager.cpp: ../src/modules/screenshot/ScreenshotManager.h \
 		../../../../anaconda3/include/qt/QtCore/QObject \
@@ -1408,7 +1478,7 @@ moc_ScreenshotManager.cpp: ../src/modules/screenshot/ScreenshotManager.h \
 		../../../../anaconda3/include/qt/QtGui/qtouchdevice.h \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
-	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall2/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall2 -I/Users/tp/Documents/qt/FloatingBall2/src -I/Users/tp/Documents/qt/FloatingBall2/src/core -I/Users/tp/Documents/qt/FloatingBall2/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/modules/screenshot/ScreenshotManager.h -o moc_ScreenshotManager.cpp
+	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/modules/screenshot/ScreenshotManager.h -o moc_ScreenshotManager.cpp
 
 moc_ScreenshotSelector.cpp: ../src/modules/screenshot/ScreenshotSelector.h \
 		../../../../anaconda3/include/qt/QtWidgets/QWidget \
@@ -1530,7 +1600,7 @@ moc_ScreenshotSelector.cpp: ../src/modules/screenshot/ScreenshotSelector.h \
 		../../../../anaconda3/include/qt/QtGui/QTransform \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
-	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall2/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall2 -I/Users/tp/Documents/qt/FloatingBall2/src -I/Users/tp/Documents/qt/FloatingBall2/src/core -I/Users/tp/Documents/qt/FloatingBall2/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/modules/screenshot/ScreenshotSelector.h -o moc_ScreenshotSelector.cpp
+	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/modules/screenshot/ScreenshotSelector.h -o moc_ScreenshotSelector.cpp
 
 moc_ChatManager.cpp: ../src/modules/chat/ChatManager.h \
 		../../../../anaconda3/include/qt/QtWidgets/QMainWindow \
@@ -1737,9 +1807,11 @@ moc_ChatManager.cpp: ../src/modules/chat/ChatManager.h \
 		../src/core/ModuleBase.h \
 		../../../../anaconda3/include/qt/QtCore/QSettings \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
+		../src/core/AppManager.h \
+		../../../../anaconda3/include/qt/QtCore/QDebug \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
-	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall2/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall2 -I/Users/tp/Documents/qt/FloatingBall2/src -I/Users/tp/Documents/qt/FloatingBall2/src/core -I/Users/tp/Documents/qt/FloatingBall2/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/modules/chat/ChatManager.h -o moc_ChatManager.cpp
+	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/modules/chat/ChatManager.h -o moc_ChatManager.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1904,28 +1976,98 @@ main.o: ../src/main.cpp ../../../../anaconda3/include/qt/QtWidgets/QApplication 
 		../../../../anaconda3/include/qt/QtCore/QSettings \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
 		../../../../anaconda3/include/qt/QtCore/QString \
-		../src/modules/screenshot/ScreenshotManager.h \
-		../../../../anaconda3/include/qt/QtWidgets/QMessageBox \
-		../../../../anaconda3/include/qt/QtWidgets/qmessagebox.h \
-		../../../../anaconda3/include/qt/QtWidgets/qdialog.h \
-		../src/ui/SettingsDialog.h \
-		../../../../anaconda3/include/qt/QtWidgets/QDialog \
-		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
-		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
-		../../../../anaconda3/include/qt/QtWidgets/qframe.h \
-		../../../../anaconda3/include/qt/QtGui/qtextcursor.h \
-		../../../../anaconda3/include/qt/QtGui/qtextformat.h \
-		../../../../anaconda3/include/qt/QtGui/qpen.h \
-		../../../../anaconda3/include/qt/QtGui/qtextoption.h \
+		../src/modules/chat/ChatManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QMainWindow \
+		../../../../anaconda3/include/qt/QtWidgets/qmainwindow.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
 		../../../../anaconda3/include/qt/QtWidgets/QTextEdit \
 		../../../../anaconda3/include/qt/QtWidgets/qtextedit.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractscrollarea.h \
+		../../../../anaconda3/include/qt/QtWidgets/qframe.h \
 		../../../../anaconda3/include/qt/QtGui/qtextdocument.h \
+		../../../../anaconda3/include/qt/QtGui/qtextoption.h \
+		../../../../anaconda3/include/qt/QtGui/qtextcursor.h \
+		../../../../anaconda3/include/qt/QtGui/qtextformat.h \
+		../../../../anaconda3/include/qt/QtGui/qpen.h \
+		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
+		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkAccessManager \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkaccessmanager.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetworkglobal.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetwork-config.h \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkrequest.h \
+		../../../../anaconda3/include/qt/QtCore/QSharedDataPointer \
+		../../../../anaconda3/include/qt/QtCore/QUrl \
+		../../../../anaconda3/include/qt/QtCore/QVariant \
+		../../../../anaconda3/include/qt/QtCore/QVector \
+		../../../../anaconda3/include/qt/QtNetwork/QSslConfiguration \
+		../../../../anaconda3/include/qt/QtNetwork/qsslconfiguration.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtcpsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qabstractsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslerror.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslcertificate.h \
+		../../../../anaconda3/include/qt/QtCore/qcryptographichash.h \
+		../../../../anaconda3/include/qt/QtCore/qdatetime.h \
+		../../../../anaconda3/include/qt/QtNetwork/qssl.h \
+		../../../../anaconda3/include/qt/QtCore/QFlags \
+		../../../../anaconda3/include/qt/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../anaconda3/include/qt/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../anaconda3/include/qt/QtCore/QMetaType \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkReply \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkreply.h \
+		../../../../anaconda3/include/qt/QtCore/QIODevice \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkRequest \
+		../../../../anaconda3/include/qt/QtCore/QJsonDocument \
+		../../../../anaconda3/include/qt/QtCore/qjsondocument.h \
+		../../../../anaconda3/include/qt/QtCore/qjsonvalue.h \
+		../../../../anaconda3/include/qt/QtCore/qcborvalue.h \
+		../../../../anaconda3/include/qt/QtCore/qcborcommon.h \
+		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
+		../../../../anaconda3/include/qt/QtCore/quuid.h \
+		../../../../anaconda3/include/qt/QtCore/QJsonObject \
+		../../../../anaconda3/include/qt/QtCore/qjsonobject.h \
+		../../../../anaconda3/include/qt/QtCore/QJsonArray \
+		../../../../anaconda3/include/qt/QtCore/qjsonarray.h \
+		../../../../anaconda3/include/qt/QtWidgets/QListWidget \
+		../../../../anaconda3/include/qt/QtWidgets/qlistwidget.h \
+		../../../../anaconda3/include/qt/QtWidgets/qlistview.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemview.h \
+		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
+		../../../../anaconda3/include/qt/QtCore/qitemselectionmodel.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
+		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
+		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
+		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
+		../../../../anaconda3/include/qt/QtWidgets/QSplitter \
+		../../../../anaconda3/include/qt/QtWidgets/qsplitter.h \
+		../../../../anaconda3/include/qt/QtGui/QScreen \
+		../../../../anaconda3/include/qt/QtGui/qscreen.h \
+		../../../../anaconda3/include/qt/QtCore/QList \
+		../../../../anaconda3/include/qt/QtCore/QRect \
+		../../../../anaconda3/include/qt/QtCore/QSize \
+		../../../../anaconda3/include/qt/QtCore/QSizeF \
+		../../../../anaconda3/include/qt/QtGui/QTransform \
+		../../../../anaconda3/include/qt/QtCore/QDateTime \
+		../../../../anaconda3/include/qt/QtWidgets/QDialog \
+		../../../../anaconda3/include/qt/QtWidgets/qdialog.h \
+		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
+		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
+		../../../../anaconda3/include/qt/QtWidgets/QLabel \
+		../../../../anaconda3/include/qt/QtWidgets/qlabel.h \
+		../../../../anaconda3/include/qt/QtGui/QCloseEvent \
+		../src/modules/screenshot/ScreenshotManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QMessageBox \
+		../../../../anaconda3/include/qt/QtWidgets/qmessagebox.h \
+		../src/ui/SettingsDialog.h \
 		../../../../anaconda3/include/qt/QtWidgets/QCheckBox \
 		../../../../anaconda3/include/qt/QtWidgets/qcheckbox.h \
 		../../../../anaconda3/include/qt/QtWidgets/QSlider \
-		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
 		../../../../anaconda3/include/qt/QtWidgets/QStackedWidget \
 		../../../../anaconda3/include/qt/QtWidgets/qstackedwidget.h \
 		../../../../anaconda3/include/qt/QtWidgets/QFormLayout \
@@ -2347,28 +2489,98 @@ FloatingBall.o: ../src/ui/FloatingBall.cpp ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtCore/QSettings \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
 		../../../../anaconda3/include/qt/QtCore/QString \
-		../src/modules/screenshot/ScreenshotManager.h \
-		../../../../anaconda3/include/qt/QtWidgets/QMessageBox \
-		../../../../anaconda3/include/qt/QtWidgets/qmessagebox.h \
-		../../../../anaconda3/include/qt/QtWidgets/qdialog.h \
-		../src/ui/SettingsDialog.h \
-		../../../../anaconda3/include/qt/QtWidgets/QDialog \
-		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
-		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
-		../../../../anaconda3/include/qt/QtWidgets/qframe.h \
-		../../../../anaconda3/include/qt/QtGui/qtextcursor.h \
-		../../../../anaconda3/include/qt/QtGui/qtextformat.h \
-		../../../../anaconda3/include/qt/QtGui/qpen.h \
-		../../../../anaconda3/include/qt/QtGui/qtextoption.h \
+		../src/modules/chat/ChatManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QMainWindow \
+		../../../../anaconda3/include/qt/QtWidgets/qmainwindow.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
 		../../../../anaconda3/include/qt/QtWidgets/QTextEdit \
 		../../../../anaconda3/include/qt/QtWidgets/qtextedit.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractscrollarea.h \
+		../../../../anaconda3/include/qt/QtWidgets/qframe.h \
 		../../../../anaconda3/include/qt/QtGui/qtextdocument.h \
+		../../../../anaconda3/include/qt/QtGui/qtextoption.h \
+		../../../../anaconda3/include/qt/QtGui/qtextcursor.h \
+		../../../../anaconda3/include/qt/QtGui/qtextformat.h \
+		../../../../anaconda3/include/qt/QtGui/qpen.h \
+		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
+		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkAccessManager \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkaccessmanager.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetworkglobal.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetwork-config.h \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkrequest.h \
+		../../../../anaconda3/include/qt/QtCore/QSharedDataPointer \
+		../../../../anaconda3/include/qt/QtCore/QUrl \
+		../../../../anaconda3/include/qt/QtCore/QVariant \
+		../../../../anaconda3/include/qt/QtCore/QVector \
+		../../../../anaconda3/include/qt/QtNetwork/QSslConfiguration \
+		../../../../anaconda3/include/qt/QtNetwork/qsslconfiguration.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtcpsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qabstractsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslerror.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslcertificate.h \
+		../../../../anaconda3/include/qt/QtCore/qcryptographichash.h \
+		../../../../anaconda3/include/qt/QtCore/qdatetime.h \
+		../../../../anaconda3/include/qt/QtNetwork/qssl.h \
+		../../../../anaconda3/include/qt/QtCore/QFlags \
+		../../../../anaconda3/include/qt/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../anaconda3/include/qt/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../anaconda3/include/qt/QtCore/QMetaType \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkReply \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkreply.h \
+		../../../../anaconda3/include/qt/QtCore/QIODevice \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkRequest \
+		../../../../anaconda3/include/qt/QtCore/QJsonDocument \
+		../../../../anaconda3/include/qt/QtCore/qjsondocument.h \
+		../../../../anaconda3/include/qt/QtCore/qjsonvalue.h \
+		../../../../anaconda3/include/qt/QtCore/qcborvalue.h \
+		../../../../anaconda3/include/qt/QtCore/qcborcommon.h \
+		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
+		../../../../anaconda3/include/qt/QtCore/quuid.h \
+		../../../../anaconda3/include/qt/QtCore/QJsonObject \
+		../../../../anaconda3/include/qt/QtCore/qjsonobject.h \
+		../../../../anaconda3/include/qt/QtCore/QJsonArray \
+		../../../../anaconda3/include/qt/QtCore/qjsonarray.h \
+		../../../../anaconda3/include/qt/QtWidgets/QListWidget \
+		../../../../anaconda3/include/qt/QtWidgets/qlistwidget.h \
+		../../../../anaconda3/include/qt/QtWidgets/qlistview.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemview.h \
+		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
+		../../../../anaconda3/include/qt/QtCore/qitemselectionmodel.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
+		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
+		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
+		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
+		../../../../anaconda3/include/qt/QtWidgets/QSplitter \
+		../../../../anaconda3/include/qt/QtWidgets/qsplitter.h \
+		../../../../anaconda3/include/qt/QtGui/QScreen \
+		../../../../anaconda3/include/qt/QtGui/qscreen.h \
+		../../../../anaconda3/include/qt/QtCore/QList \
+		../../../../anaconda3/include/qt/QtCore/QRect \
+		../../../../anaconda3/include/qt/QtCore/QSize \
+		../../../../anaconda3/include/qt/QtCore/QSizeF \
+		../../../../anaconda3/include/qt/QtGui/QTransform \
+		../../../../anaconda3/include/qt/QtCore/QDateTime \
+		../../../../anaconda3/include/qt/QtWidgets/QDialog \
+		../../../../anaconda3/include/qt/QtWidgets/qdialog.h \
+		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
+		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
+		../../../../anaconda3/include/qt/QtWidgets/QLabel \
+		../../../../anaconda3/include/qt/QtWidgets/qlabel.h \
+		../../../../anaconda3/include/qt/QtGui/QCloseEvent \
+		../src/modules/screenshot/ScreenshotManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QMessageBox \
+		../../../../anaconda3/include/qt/QtWidgets/qmessagebox.h \
+		../src/ui/SettingsDialog.h \
 		../../../../anaconda3/include/qt/QtWidgets/QCheckBox \
 		../../../../anaconda3/include/qt/QtWidgets/qcheckbox.h \
 		../../../../anaconda3/include/qt/QtWidgets/QSlider \
-		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
 		../../../../anaconda3/include/qt/QtWidgets/QStackedWidget \
 		../../../../anaconda3/include/qt/QtWidgets/qstackedwidget.h \
 		../../../../anaconda3/include/qt/QtWidgets/QFormLayout \
@@ -2377,13 +2589,6 @@ FloatingBall.o: ../src/ui/FloatingBall.cpp ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtGui/QPainter \
 		../../../../anaconda3/include/qt/QtGui/qpainter.h \
 		../../../../anaconda3/include/qt/QtGui/QMouseEvent \
-		../../../../anaconda3/include/qt/QtGui/QScreen \
-		../../../../anaconda3/include/qt/QtGui/qscreen.h \
-		../../../../anaconda3/include/qt/QtCore/QList \
-		../../../../anaconda3/include/qt/QtCore/QRect \
-		../../../../anaconda3/include/qt/QtCore/QSize \
-		../../../../anaconda3/include/qt/QtCore/QSizeF \
-		../../../../anaconda3/include/qt/QtGui/QTransform \
 		../../../../anaconda3/include/qt/QtWidgets/QApplication \
 		../../../../anaconda3/include/qt/QtWidgets/qapplication.h \
 		../../../../anaconda3/include/qt/QtCore/qcoreapplication.h \
@@ -3036,6 +3241,8 @@ ChatManager.o: ../src/modules/chat/ChatManager.cpp ../src/modules/chat/ChatManag
 		../src/core/ModuleBase.h \
 		../../../../anaconda3/include/qt/QtCore/QSettings \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
+		../src/core/AppManager.h \
+		../../../../anaconda3/include/qt/QtCore/QDebug \
 		../../../../anaconda3/include/qt/QtWidgets/QWidget \
 		../../../../anaconda3/include/qt/QtWidgets/QApplication \
 		../../../../anaconda3/include/qt/QtWidgets/qapplication.h \

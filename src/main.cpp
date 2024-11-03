@@ -3,6 +3,7 @@
 #include "core/AppManager.h"
 #include <QDir>
 int main(int argc, char *argv[]) {
+    
     QApplication app(argc, argv);
     
     // 检查资源是否被正确编译
