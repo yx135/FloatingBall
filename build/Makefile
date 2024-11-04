@@ -61,7 +61,8 @@ SOURCES       = ../src/main.cpp \
 		../src/ui/SettingsDialog.cpp \
 		../src/modules/screenshot/ScreenshotManager.cpp \
 		../src/modules/screenshot/ScreenshotSelector.cpp \
-		../src/modules/chat/ChatManager.cpp qrc_resources.cpp \
+		../src/modules/chat/ChatManager.cpp \
+		src/modules/translate/TranslateUi.cpp qrc_resources.cpp \
 		moc_ModuleBase.cpp \
 		moc_ConfigManager.cpp \
 		moc_FloatingBall.cpp \
@@ -79,6 +80,7 @@ OBJECTS       = main.o \
 		ScreenshotManager.o \
 		ScreenshotSelector.o \
 		ChatManager.o \
+		TranslateUi.o \
 		qrc_resources.o \
 		moc_ModuleBase.o \
 		moc_ConfigManager.o \
@@ -310,7 +312,8 @@ DIST          = /Users/anaconda3/mkspecs/features/spec_pre.prf \
 		../src/ui/SettingsDialog.h \
 		../src/modules/screenshot/ScreenshotManager.h \
 		../src/modules/screenshot/ScreenshotSelector.h \
-		../src/modules/chat/ChatManager.h ../src/main.cpp \
+		../src/modules/chat/ChatManager.h \
+		src/modules/translate/TranslateUi.h ../src/main.cpp \
 		../src/core/ModuleBase.cpp \
 		../src/core/AppManager.cpp \
 		../src/core/EventSystem.cpp \
@@ -319,7 +322,8 @@ DIST          = /Users/anaconda3/mkspecs/features/spec_pre.prf \
 		../src/ui/SettingsDialog.cpp \
 		../src/modules/screenshot/ScreenshotManager.cpp \
 		../src/modules/screenshot/ScreenshotSelector.cpp \
-		../src/modules/chat/ChatManager.cpp
+		../src/modules/chat/ChatManager.cpp \
+		src/modules/translate/TranslateUi.cpp
 QMAKE_TARGET  = FloatingBall
 DESTDIR       = 
 TARGET        = FloatingBall.app/Contents/MacOS/FloatingBall
@@ -808,8 +812,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../anaconda3/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/core/AppManager.h ../src/core/ModuleBase.h ../src/core/ConfigManager.h ../src/core/EventSystem.h ../src/ui/FloatingBall.h ../src/ui/SettingsDialog.h ../src/modules/screenshot/ScreenshotManager.h ../src/modules/screenshot/ScreenshotSelector.h ../src/modules/chat/ChatManager.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/main.cpp ../src/core/ModuleBase.cpp ../src/core/AppManager.cpp ../src/core/EventSystem.cpp ../src/core/ConfigManager.cpp ../src/ui/FloatingBall.cpp ../src/ui/SettingsDialog.cpp ../src/modules/screenshot/ScreenshotManager.cpp ../src/modules/screenshot/ScreenshotSelector.cpp ../src/modules/chat/ChatManager.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/core/AppManager.h ../src/core/ModuleBase.h ../src/core/ConfigManager.h ../src/core/EventSystem.h ../src/ui/FloatingBall.h ../src/ui/SettingsDialog.h ../src/modules/screenshot/ScreenshotManager.h ../src/modules/screenshot/ScreenshotSelector.h ../src/modules/chat/ChatManager.h src/modules/translate/TranslateUi.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/main.cpp ../src/core/ModuleBase.cpp ../src/core/AppManager.cpp ../src/core/EventSystem.cpp ../src/core/ConfigManager.cpp ../src/ui/FloatingBall.cpp ../src/ui/SettingsDialog.cpp ../src/modules/screenshot/ScreenshotManager.cpp ../src/modules/screenshot/ScreenshotSelector.cpp ../src/modules/chat/ChatManager.cpp src/modules/translate/TranslateUi.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1115,6 +1119,8 @@ moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtWidgets/qactiongroup.h \
 		../../../../anaconda3/include/qt/QtCore/QProcess \
 		../../../../anaconda3/include/qt/QtCore/qprocess.h \
+		../../../../anaconda3/include/qt/QtCore/QFile \
+		../../../../anaconda3/include/qt/QtCore/QTextStream \
 		../src/core/AppManager.h \
 		../../../../anaconda3/include/qt/QtCore/QDebug \
 		../src/core/ConfigManager.h \
@@ -1220,6 +1226,7 @@ moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtWidgets/QFormLayout \
 		../../../../anaconda3/include/qt/QtWidgets/qformlayout.h \
 		../../../../anaconda3/include/qt/QtWidgets/QLayout \
+		../src/modules/\ translate/TranslateUi.h \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
 	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/ui/FloatingBall.h -o moc_FloatingBall.cpp
@@ -1968,6 +1975,8 @@ main.o: ../src/main.cpp ../../../../anaconda3/include/qt/QtWidgets/QApplication 
 		../../../../anaconda3/include/qt/QtWidgets/qactiongroup.h \
 		../../../../anaconda3/include/qt/QtCore/QProcess \
 		../../../../anaconda3/include/qt/QtCore/qprocess.h \
+		../../../../anaconda3/include/qt/QtCore/QFile \
+		../../../../anaconda3/include/qt/QtCore/QTextStream \
 		../src/core/AppManager.h \
 		../../../../anaconda3/include/qt/QtCore/QDebug \
 		../src/core/ConfigManager.h \
@@ -2073,6 +2082,7 @@ main.o: ../src/main.cpp ../../../../anaconda3/include/qt/QtWidgets/QApplication 
 		../../../../anaconda3/include/qt/QtWidgets/QFormLayout \
 		../../../../anaconda3/include/qt/QtWidgets/qformlayout.h \
 		../../../../anaconda3/include/qt/QtWidgets/QLayout \
+		../src/modules/\ translate/TranslateUi.h \
 		../../../../anaconda3/include/qt/QtCore/QDir \
 		../../../../anaconda3/include/qt/QtCore/qdir.h \
 		../../../../anaconda3/include/qt/QtCore/qfileinfo.h
@@ -2481,6 +2491,8 @@ FloatingBall.o: ../src/ui/FloatingBall.cpp ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtWidgets/qactiongroup.h \
 		../../../../anaconda3/include/qt/QtCore/QProcess \
 		../../../../anaconda3/include/qt/QtCore/qprocess.h \
+		../../../../anaconda3/include/qt/QtCore/QFile \
+		../../../../anaconda3/include/qt/QtCore/QTextStream \
 		../src/core/AppManager.h \
 		../../../../anaconda3/include/qt/QtCore/QDebug \
 		../src/core/ConfigManager.h \
@@ -2586,6 +2598,7 @@ FloatingBall.o: ../src/ui/FloatingBall.cpp ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtWidgets/QFormLayout \
 		../../../../anaconda3/include/qt/QtWidgets/qformlayout.h \
 		../../../../anaconda3/include/qt/QtWidgets/QLayout \
+		../src/modules/\ translate/TranslateUi.h \
 		../../../../anaconda3/include/qt/QtGui/QPainter \
 		../../../../anaconda3/include/qt/QtGui/qpainter.h \
 		../../../../anaconda3/include/qt/QtGui/QMouseEvent \
@@ -3252,6 +3265,9 @@ ChatManager.o: ../src/modules/chat/ChatManager.cpp ../src/modules/chat/ChatManag
 		../../../../anaconda3/include/qt/QtGui/qguiapplication.h \
 		../../../../anaconda3/include/qt/QtGui/qinputmethod.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ChatManager.o ../src/modules/chat/ChatManager.cpp
+
+TranslateUi.o: src/modules/translate/TranslateUi.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TranslateUi.o src/modules/translate/TranslateUi.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp

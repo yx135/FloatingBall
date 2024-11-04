@@ -19,6 +19,8 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent) {
     aichat_api_endpoint = new QTextEdit(this);
     aichat_api_key->setFixedHeight(80);
     aichat_api_endpoint->setFixedHeight(80);
+    aichat_Prompt = new QTextEdit(this);
+    aichat_Prompt->setFixedHeight(80);
     //aichat_api_key->setLineWrapMode(QTextEdit::NoWrap);
     //aichat_api_endpoint->setLineWrapMode(QTextEdit::NoWrap);
 
@@ -51,6 +53,7 @@ void SettingsDialog::setupUI() {
     QFormLayout* chatLayout = new QFormLayout(chatSettingsPage);
     chatLayout->addRow(tr("AI Chat API Key:"), aichat_api_key);
     chatLayout->addRow(tr("AI Chat API 端点:"), aichat_api_endpoint);
+    chatLayout->addRow(tr("提示词:"),aichat_Prompt);
     stackedWidget->addWidget(chatSettingsPage);
     
     // 创建水平布局
@@ -90,6 +93,7 @@ void SettingsDialog::saveSettings() {
     // 保存 AI Chat 设置
     config->setValue("aichat/api_key", aichat_api_key->toPlainText());
     config->setValue("aichat/api_endpoint", aichat_api_endpoint->toPlainText());
+    config->setValue("aicht/prompt",aichat_Prompt->toPlainText());
    
     accept();
 }
@@ -107,9 +111,10 @@ void SettingsDialog::loadSettings() {
     //opacitySlider->setValue(config->getValue(ConfigKeys::APPEARANCE_OPACITY, 0.4) * 100);
     
     // 加载 AI Chat 设置
-    qDebug()<<"aichat/api_key:"<<config->getValue("aichat/api_key", QString());
-    qDebug()<<"aichat/api_endpoint:"<<config->getValue("aichat/api_endpoint",QString());
+    //qDebug()<<"aichat/api_key:"<<config->getValue("aichat/api_key", QString());
+    //qDebug()<<"aichat/api_endpoint:"<<config->getValue("aichat/api_endpoint",QString());
     aichat_api_key->setText(config->getValue("aichat/api_key", QString()));
     aichat_api_endpoint->setText(config->getValue("aichat/api_endpoint",QString()));
+    aichat_Prompt->setText(config->getValue("aichat/prompt",QString()));
     qDebug()<<"加载配置完成";
 }

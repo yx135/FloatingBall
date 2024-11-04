@@ -28,7 +28,12 @@ private:
     // AI Chat 设置控件
     QTextEdit* aichat_api_key;
     QTextEdit* aichat_api_endpoint;
+    QTextEdit* aichat_Prompt;
+    
     
     void setupUI();
     void setupChatSettings();
+
+    //一些默认配置：
+
 };

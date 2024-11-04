@@ -23,6 +23,7 @@
 #include "../../core/ConfigManager.h"
 #include "../../core/AppManager.h"
 
+class ConfigManager;
 class ChatManager : public QWidget
 {
     Q_OBJECT
@@ -35,6 +36,7 @@ public:
    // Ui::MainWindow *ui;
     QString m_apiKey;
     QString m_apiEndpoint;
+    QString m_prompt;
     QComboBox* model;
     QTextEdit* chatTextEdit;
     QLineEdit* chatInputLine;
@@ -66,6 +68,7 @@ public:
     void initmodelist();
     void closeEvent(QCloseEvent *event) override;
     void updateApiConfig();
+    void sendPromptMessageToAI();
 private slots:
     // ... 其他槽函数 ...
     void handleNetworkError(QNetworkReply::NetworkError error);

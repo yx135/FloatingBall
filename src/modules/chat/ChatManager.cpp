@@ -66,6 +66,14 @@ ChatManager::ChatManager(QWidget *parent) : QWidget(parent)
     connect(deleteHistoryButton, &QPushButton::clicked, this, &ChatManager::deleteSelectedChat);
 
     
+       // 设置窗口标志
+    setAttribute(Qt::WA_TranslucentBackground);
+    
+    networkManager = new QNetworkAccessManager(this);
+    
+    createNewChat();
+    qDebug()<<"aichat构造完成";
+
     // 连接信号和槽
     connect(sendButton, &QPushButton::clicked, this, &ChatManager::sendMessage);
     connect(chatInputLine, &QLineEdit::returnPressed, this, &ChatManager::sendMessage);
@@ -75,13 +83,6 @@ ChatManager::ChatManager(QWidget *parent) : QWidget(parent)
     connect(historyList, &QListWidget::itemDoubleClicked, this, &ChatManager::loadSelectedChat);
     connect(deleteHistoryButton, &QPushButton::clicked, this, &ChatManager::deleteSelectedChat);
     
-       // 设置窗口标志
-    setAttribute(Qt::WA_TranslucentBackground);
-    
-    networkManager = new QNetworkAccessManager(this);
-    
-    createNewChat();
-    qDebug()<<"aichat构造完成";
 }
 void ChatManager::saveCurrentChat()
 {
@@ -181,6 +182,7 @@ void ChatManager::createNewChat()
     chatTextEdit->append("系统: " + welcomeMessage);
     chatHistory.append(QJsonObject{{"role", "system"}, {"content", welcomeMessage}});
     updateApiConfig();   
+    sendPromptMessageToAI();
 }
 void ChatManager::loadChat(const QString &chatId)
 {
@@ -196,7 +198,14 @@ void ChatManager::loadChat(const QString &chatId)
     }
 }
 
-
+void ChatManager::sendPromptMessageToAI( )
+{
+   // QString prompt = config->getValue("aichat/prompt", "你是一个有帮助的AI助手。");
+    chatTextEdit->append("系统: " +m_prompt);
+    chatHistory.append(QJsonObject{{"role", "system"}, {"content", m_prompt}});
+    //chatHistories[currentChatId] = chatHistory;
+    sendMessageToAI(m_prompt);
+}
 void ChatManager::sendMessageToAI(const QString &message)
 {
     qDebug() << "正在发送消息到 AI:" << message;
@@ -211,11 +220,11 @@ void ChatManager::sendMessageToAI(const QString &message)
     qDebug()<<this->model->currentText();
     QJsonObject json;
     json["model"] = this->model->currentText();
-    QJsonArray messages;
+    QJsonArray messages= chatHistory;
     messages.append(QJsonObject{{"role", "user"}, {"content", message}});
     json["messages"] = messages;
 
-     currentReply = networkManager->post(request, QJsonDocument(json).toJson());
+    currentReply = networkManager->post(request, QJsonDocument(json).toJson());
         qDebug()<<"已经发送";
     connect(currentReply, &QNetworkReply::finished, this, &ChatManager::handleAIResponse);
     connect(currentReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleNetworkError(QNetworkReply::NetworkError)));
@@ -227,7 +236,7 @@ void ChatManager::handleAIResponse()
     QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
     if (reply->error() == QNetworkReply::NoError) {
         QByteArray response = reply->readAll();
-        qDebug() << "收到 AI 响应:" << response;
+        qDebug() << "收到 AI 响应:" << response.toStdString().c_str();
         QJsonDocument jsonResponse = QJsonDocument::fromJson(response);
         QJsonObject jsonObject = jsonResponse.object();
         QString aiMessage = jsonObject["choices"].toArray().first().toObject()["message"].toObject()["content"].toString();
@@ -323,4 +332,5 @@ void ChatManager::updateApiConfig()
     }
     m_apiKey = config->getValue<QString>("aichat/api_key");
     m_apiEndpoint = config->getValue<QString>("aichat/api_endpoint");
+    m_prompt = config->getValue<QString>("aichat/prompt");
 }

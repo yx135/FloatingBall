@@ -15,7 +15,7 @@
 #include "../modules/chat/ChatManager.h" // 添加这行来包含 ChatManager 的头文件
 #include "../modules/screenshot/ScreenshotManager.h"
 #include "SettingsDialog.h"
-
+#include "../modules/translate/TranslateUI.h"
 class ScreenshotManager;  // 前向声明
 
 class FloatingBall : public QWidget {
@@ -48,6 +48,7 @@ private:
     QVBoxLayout* mainLayout = nullptr;
     QPushButton* screenshotButton = nullptr;
     QPushButton* chatButton = nullptr;
+    QPushButton* translateButton = nullptr;
     QTimer* doubleClickTimer = nullptr;
     QPropertyAnimation* sizeAnimation = nullptr;
     

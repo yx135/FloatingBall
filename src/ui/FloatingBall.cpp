@@ -25,6 +25,14 @@ FloatingBall::FloatingBall(QWidget *parent) : QWidget(parent) {
         this->clearFocus();
         this->lower();
     });
+    //翻译
+    connect(translateButton, &QPushButton::clicked,[this](){
+        TranslateUI* translateWindow = new TranslateUI();
+        translateWindow->setAttribute(Qt::WA_DeleteOnClose);
+        translateWindow->show();
+        this->clearFocus();
+        this->lower();
+    });
 }
 
 FloatingBall::~FloatingBall() {
@@ -82,6 +90,8 @@ void FloatingBall::setupUI() {
 void FloatingBall::setupButtons() {
     screenshotButton = new QPushButton("截图", this);
     chatButton = new QPushButton("聊天", this);
+    translateButton = new QPushButton("翻译", this);
+
     
     //从文件读取样式
     QString buttonStyle = readStyleFromFile(":/resources/styles/style.qss");
@@ -92,14 +102,16 @@ void FloatingBall::setupButtons() {
     else{
         screenshotButton->setStyleSheet(buttonStyle);
         chatButton->setStyleSheet(buttonStyle);
+        translateButton->setStyleSheet(buttonStyle);
     }
     
     mainLayout->addWidget(screenshotButton);
     mainLayout->addWidget(chatButton);
+    mainLayout->addWidget(translateButton);
     
     screenshotButton->hide();
     chatButton->hide();
-    
+    translateButton->hide();
     
 }
 void FloatingBall::mouseDoubleClickEvent(QMouseEvent *event) {
@@ -130,6 +142,7 @@ void FloatingBall::toggleExpansion() {
     QRect screenGeometry = screen->geometry();
     //获取全局坐标
     QPoint globalPos = mapToGlobal(QPoint(0, 0));
+    //mapToGlobal(QPoint(0, 0)) 将窗口坐标转换为全局坐标
 
     if (!isExpanded) {
         ballPos = globalPos;
@@ -157,6 +170,7 @@ void FloatingBall::toggleExpansion() {
         }
         screenshotButton->show();
         chatButton->show();
+        translateButton->show();
     } else {
         // 折叠
         QPoint newPos = pos();
@@ -168,6 +182,7 @@ void FloatingBall::toggleExpansion() {
         move(ballPos);
         screenshotButton->hide();
         chatButton->hide();
+        translateButton->hide();
     }
 
     isExpanded = !isExpanded;
