@@ -5,11 +5,14 @@
 #include<QScreen>
 #include"TranslateManager.h"
 #include<QClipboard>
+#include<QLabel>
 TranslateUI::TranslateUI(QWidget *parent):QWidget(parent)
 {        qDebug()<<"构建翻译";
 
         setupUI();
         connectButton();
+        initTargetLang();
+        initTranslator();
         qDebug()<<"构建完成";
 
 }
@@ -28,20 +31,43 @@ void TranslateUI::setupUI()
     QWidget* widget = new QWidget(this);
     translateButton = new QPushButton("翻译", widget);
     clearButton = new QPushButton("清空", widget);
+    target_lang = new QComboBox(this);
+    translator = new QComboBox(this);
 
-    //设置高度
-    //originalText->setFixedHeight(100);
-    //translatedText->setFixedHeight(100);
-    //设置布局
-    QVBoxLayout* layout = new QVBoxLayout(this);
-    layout->addWidget(originalText);
-    layout->addWidget(translatedText);
-    layout->addWidget(widget);
+    //翻译器布局
+    QWidget* translaorwidget = new QWidget(this);
+    QHBoxLayout* translatorlayout = new QHBoxLayout(translaorwidget);
+    QLabel* translator_lael = new QLabel("翻译器",translaorwidget);
+    translatorlayout ->addWidget(translator_lael);
+    translatorlayout->addWidget(translator);
+    translatorlayout->setContentsMargins(0, 0, 0, 0);
+
+    //目标语言布局
+    QWidget* langwidget = new QWidget(this);
+    QHBoxLayout* tlayout = new QHBoxLayout(langwidget);
+    QLabel* label = new QLabel("目标语言",langwidget);
+    tlayout->addWidget(label);
+    tlayout->addWidget(this->target_lang);
+    tlayout->setContentsMargins(0, 0, 0, 0);
+
+
 
     //设置水平布局
     QHBoxLayout* hlayout = new QHBoxLayout(widget);
     hlayout->addWidget(translateButton);
     hlayout->addWidget(clearButton);
+    hlayout->setContentsMargins(0, 5, 0, 5);
+
+    //设置布局
+    QVBoxLayout* layout = new QVBoxLayout(this);
+    layout->addWidget(originalText);
+    layout->addWidget(translaorwidget);
+    layout->addWidget(langwidget);
+    layout->addWidget(translatedText);
+    layout->addWidget(widget);
+    layout->setContentsMargins(5, 0, 5, 0);
+    layout->setSpacing(1);
+
     //设置���局
 
     //移动到屏幕右下角
@@ -70,7 +96,8 @@ void TranslateUI::translateText()
         translatedText->append("请输入要翻译的文本");
         return;
     }
-    
+    //获取目标语言
+    QString target_lang_text = target_lang->currentText();
     // 创建翻译管理器并保存为成员变量，避免内存泄漏
     if (m_translateManager) {
         m_translateManager->deleteLater();//删除翻译管理器
@@ -114,4 +141,17 @@ void TranslateUI::translateClipboardText()
     if (!selectedText.isEmpty()) {
        setTextAndTranslate(selectedText);
     }
+}
+void TranslateUI::initTargetLang()
+{
+    target_lang_list.append("ZH");
+    target_lang_list.append("EN");
+    target_lang->addItems(target_lang_list);
+}
+void TranslateUI::initTranslator()
+{
+    translator_list.append("deeplx");
+    translator_list.append("AI");
+    translator->addItems(translator_list);
+
 }

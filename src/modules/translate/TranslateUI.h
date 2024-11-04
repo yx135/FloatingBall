@@ -3,6 +3,7 @@
 #include<QWidget>
 #include <QTextEdit>
 #include <QPushButton>
+#include<QComboBox>
 #include"TranslateManager.h"
 class TranslateUI:public QWidget
 {
@@ -20,8 +21,14 @@ protected:
     QTextEdit* translatedText;
     QPushButton* translateButton;
     QPushButton* clearButton;
+    QComboBox* target_lang;
+    QComboBox* translator;
+    QStringList target_lang_list;
+    QStringList translator_list;
     void setupUI();
     void connectButton();
+    void initTargetLang();
+    void initTranslator();
 
 public slots:
     void clearText();
