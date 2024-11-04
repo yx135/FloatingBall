@@ -3,7 +3,6 @@
 #include<QDebug>
 #include<QApplication>
 #include<QScreen>
-#include"TranslateManager.h"
 #include<QClipboard>
 #include<QLabel>
 TranslateUI::TranslateUI(QWidget *parent):QWidget(parent)
@@ -102,16 +101,16 @@ void TranslateUI::translateText()
     if (m_translateManager) {
         m_translateManager->deleteLater();//删除翻译管理器
     }
-    m_translateManager = new TranslateManager(this);
+    m_translateManager = AppManager::getInstance().getTranslator(translator->currentText());
     
     // 连接信号槽
-    connect(m_translateManager, &TranslateManager::translated,
+    connect(m_translateManager, &Translator::translated,
             this, [this](const QString &text){
                 translatedText->append(text);
             });
     
     // 发送翻译请求
-    m_translateManager->sendTranslate(text);
+    m_translateManager->sendTranslate(text,target_lang_text);
 }
 
 void TranslateUI::connectButton()

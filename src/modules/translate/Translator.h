@@ -5,16 +5,15 @@
 #include"QDebug"
 #include<QNetworkAccessManager>
 #include <QClipboard>  
-class TranslateManager:public QObject
+class Translator:public QObject
 {
     Q_OBJECT
-private:
-    QString apiUrl="https://api.deeplx.org/rzd2JN1zIXlHiFagHmY5c9M2rguamJk9JU48qwmonHU/translate";
-    QString target_lang = "ZH";
+protected:
+    QString apiUrl;
     QNetworkAccessManager *manager;
 public:
-    void sendTranslate(QString text);
-    TranslateManager(QObject *parent = nullptr);
+    virtual void sendTranslate(QString text,QString target_lang) = 0;
+    Translator(QObject *parent = nullptr);
 signals:
     void translated(QString text);  
 };

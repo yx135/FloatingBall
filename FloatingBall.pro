@@ -30,7 +30,8 @@ SOURCES += \
     src/modules/screenshot/ScreenshotSelector.cpp \
     src/modules/chat/ChatManager.cpp \
     src/modules/translate/TranslateUI.cpp \
-    src/modules/translate/TranslateManager.cpp
+    src/modules/translate/Translator.cpp \
+    src/modules/translate/Translator_deeplx.cpp
 HEADERS += \
     src/core/AppManager.h \
     src/core/ModuleBase.h \
@@ -42,7 +43,8 @@ HEADERS += \
     src/modules/screenshot/ScreenshotSelector.h \
     src/modules/chat/ChatManager.h \
     src/modules/translate/TranslateUI.h \
-    src/modules/translate/TranslateManager.h
+    src/modules/translate/Translator.h \
+    src/modules/translate/Translator_deeplx.h
 
 INCLUDEPATH += \
     src \

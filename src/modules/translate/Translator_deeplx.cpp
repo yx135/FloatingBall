@@ -1,19 +1,16 @@
-#include"TranslateManager.h"
+#include"Translator_deeplx.h"
 #include<QtNetwork>
-TranslateManager::TranslateManager(QObject *parent)
-:QObject(parent)
+Translator_deeplx::Translator_deeplx()
+
 {
-    qDebug()<<"构建翻译管理器";
-    manager = new QNetworkAccessManager(this);
+
 }
 
-
-void TranslateManager::sendTranslate(QString text)
-{
+void Translator_deeplx::sendTranslate(QString text,QString target_lang)
+{   
     qDebug()<<"发送翻译请求";
    QNetworkRequest request;
    request.setUrl(QUrl(this->apiUrl));
-  // request.setRawHeader("Authorization",("DeepL-Auth-Key "+apiKey).toUtf8());
    request.setRawHeader("Content-Type","application/json");
 
    QJsonObject json;

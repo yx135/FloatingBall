@@ -18,7 +18,7 @@
 #include "../modules/screenshot/ScreenshotManager.h"
 #include "SettingsDialog.h"
 #include "../modules/translate/TranslateUI.h"
-#include "../modules/translate/TranslateManager.h"
+#include "../modules/translate/Translator.h"
 
 class ScreenshotManager;  // 前向声明
 

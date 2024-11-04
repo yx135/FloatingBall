@@ -4,7 +4,8 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include<QComboBox>
-#include"TranslateManager.h"
+#include"Translator.h"
+#include"AppManager.h"
 class TranslateUI:public QWidget
 {
     Q_OBJECT
@@ -15,7 +16,7 @@ public:
     void translateClipboardText(); 
 
 private:
-    TranslateManager* m_translateManager = nullptr;
+    Translator* m_translateManager = nullptr;
 protected:
     QTextEdit* originalText;
     QTextEdit* translatedText;

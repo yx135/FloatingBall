@@ -1,7 +1,5 @@
 #include "AppManager.h"
-#include "ConfigManager.h"
-#include "EventSystem.h"
-#include "../modules/translate/TranslateUI.h"
+
 AppManager& AppManager::getInstance() {
     static AppManager instance;
     return instance;
@@ -41,4 +39,12 @@ void AppManager::cleanup() {
     translateUI.reset();
     isInitialized = false;
     qInfo() << "AppManager cleaned up successfully";
+}
+Translator* AppManager::getTranslator(QString translator_name) 
+{
+    if(translator_name=="deeplx")
+    {
+        translator = std::unique_ptr<Translator>(new Translator_deeplx());
+    }
+    return translator.get();
 }
