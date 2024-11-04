@@ -16,7 +16,7 @@ CC            = /Library/Developer/CommandLineTools/usr/bin/clang
 CXX           = /Library/Developer/CommandLineTools/usr/bin/clang++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.13 -Wall -Wextra -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -stdlib=libc++ -DQ_OS_MAC -F/System/Library/Frameworks -O2 -std=gnu++1y $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.13 -Wall -Wextra -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -stdlib=libc++ -DQ_OS_MAC -O2 -std=gnu++1y $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.13 -Wall -Wextra -fPIC $(DEFINES)
 INCPATH       = -I../../FloatingBall -I. -I../src -I../src/core -I../src/ui -I../src/third_party/QHotkey -I../../../../anaconda3/include/qt -I../../../../anaconda3/include/qt/QtWidgets -I../../../../anaconda3/include/qt/QtGui -I../../../../anaconda3/include/qt/QtNetwork -I../../../../anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/AGL.framework/Headers -I../../../../anaconda3/mkspecs/macx-clang
 QMAKE         = /Users/tp/anaconda3/bin/qmake
 DEL_FILE      = rm -f
@@ -39,7 +39,7 @@ COMPRESS      = gzip -9f
 DISTNAME      = FloatingBall1.0.0
 DISTDIR = /Users/tp/Documents/qt/FloatingBall/build/.tmp/FloatingBall1.0.0
 LINK          = /Library/Developer/CommandLineTools/usr/bin/clang++
-LFLAGS        = -stdlib=libc++ -F/System/Library/Frameworks -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.13 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/Users/tp/anaconda3/lib
+LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.13 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/Users/tp/anaconda3/lib
 LIBS          = $(SUBLIBS) -framework Carbon -framework CoreFoundation -framework CoreServices -framework AppKit -framework CoreGraphics -framework Foundation /Users/tp/anaconda3/lib/libQt5Widgets.dylib /Users/tp/anaconda3/lib/libQt5Gui.dylib /Users/tp/anaconda3/lib/libQt5Network.dylib /Users/tp/anaconda3/lib/libQt5Core.dylib -framework OpenGL -framework AGL   
 AR            = /Library/Developer/CommandLineTools/usr/bin/ar cq
 RANLIB        = /Library/Developer/CommandLineTools/usr/bin/ranlib -s
@@ -63,7 +63,8 @@ SOURCES       = ../src/main.cpp \
 		../src/modules/screenshot/ScreenshotSelector.cpp \
 		../src/modules/chat/ChatManager.cpp \
 		../src/modules/translate/TranslateUI.cpp \
-		../src/modules/translate/TranslateManager.cpp \
+		../src/modules/translate/Translator.cpp \
+		../src/modules/translate/Translator_deeplx.cpp \
 		../src/third_party/QHotkey/qhotkey.cpp \
 		../src/third_party/QHotkey/qhotkey_mac.cpp qrc_resources.cpp \
 		moc_ModuleBase.cpp \
@@ -74,7 +75,8 @@ SOURCES       = ../src/main.cpp \
 		moc_ScreenshotSelector.cpp \
 		moc_ChatManager.cpp \
 		moc_TranslateUI.cpp \
-		moc_TranslateManager.cpp \
+		moc_Translator.cpp \
+		moc_Translator_deeplx.cpp \
 		moc_qhotkey.cpp \
 		moc_qhotkey_p.cpp
 OBJECTS       = main.o \
@@ -88,7 +90,8 @@ OBJECTS       = main.o \
 		ScreenshotSelector.o \
 		ChatManager.o \
 		TranslateUI.o \
-		TranslateManager.o \
+		Translator.o \
+		Translator_deeplx.o \
 		qhotkey.o \
 		qhotkey_mac.o \
 		qrc_resources.o \
@@ -100,7 +103,8 @@ OBJECTS       = main.o \
 		moc_ScreenshotSelector.o \
 		moc_ChatManager.o \
 		moc_TranslateUI.o \
-		moc_TranslateManager.o \
+		moc_Translator.o \
+		moc_Translator_deeplx.o \
 		moc_qhotkey.o \
 		moc_qhotkey_p.o
 DIST          = /Users/anaconda3/mkspecs/features/spec_pre.prf \
@@ -328,7 +332,8 @@ DIST          = /Users/anaconda3/mkspecs/features/spec_pre.prf \
 		../src/modules/screenshot/ScreenshotSelector.h \
 		../src/modules/chat/ChatManager.h \
 		../src/modules/translate/TranslateUI.h \
-		../src/modules/translate/TranslateManager.h \
+		../src/modules/translate/Translator.h \
+		../src/modules/translate/Translator_deeplx.h \
 		../src/third_party/QHotkey/qhotkey.h \
 		../src/third_party/QHotkey/qhotkey_p.h ../src/main.cpp \
 		../src/core/ModuleBase.cpp \
@@ -341,7 +346,8 @@ DIST          = /Users/anaconda3/mkspecs/features/spec_pre.prf \
 		../src/modules/screenshot/ScreenshotSelector.cpp \
 		../src/modules/chat/ChatManager.cpp \
 		../src/modules/translate/TranslateUI.cpp \
-		../src/modules/translate/TranslateManager.cpp \
+		../src/modules/translate/Translator.cpp \
+		../src/modules/translate/Translator_deeplx.cpp \
 		../src/third_party/QHotkey/qhotkey.cpp \
 		../src/third_party/QHotkey/qhotkey_mac.cpp
 QMAKE_TARGET  = FloatingBall
@@ -832,8 +838,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../anaconda3/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/core/AppManager.h ../src/core/ModuleBase.h ../src/core/ConfigManager.h ../src/core/EventSystem.h ../src/ui/FloatingBall.h ../src/ui/SettingsDialog.h ../src/modules/screenshot/ScreenshotManager.h ../src/modules/screenshot/ScreenshotSelector.h ../src/modules/chat/ChatManager.h ../src/modules/translate/TranslateUI.h ../src/modules/translate/TranslateManager.h ../src/third_party/QHotkey/qhotkey.h ../src/third_party/QHotkey/qhotkey_p.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/main.cpp ../src/core/ModuleBase.cpp ../src/core/AppManager.cpp ../src/core/EventSystem.cpp ../src/core/ConfigManager.cpp ../src/ui/FloatingBall.cpp ../src/ui/SettingsDialog.cpp ../src/modules/screenshot/ScreenshotManager.cpp ../src/modules/screenshot/ScreenshotSelector.cpp ../src/modules/chat/ChatManager.cpp ../src/modules/translate/TranslateUI.cpp ../src/modules/translate/TranslateManager.cpp ../src/third_party/QHotkey/qhotkey.cpp ../src/third_party/QHotkey/qhotkey_mac.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/core/AppManager.h ../src/core/ModuleBase.h ../src/core/ConfigManager.h ../src/core/EventSystem.h ../src/ui/FloatingBall.h ../src/ui/SettingsDialog.h ../src/modules/screenshot/ScreenshotManager.h ../src/modules/screenshot/ScreenshotSelector.h ../src/modules/chat/ChatManager.h ../src/modules/translate/TranslateUI.h ../src/modules/translate/Translator.h ../src/modules/translate/Translator_deeplx.h ../src/third_party/QHotkey/qhotkey.h ../src/third_party/QHotkey/qhotkey_p.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/main.cpp ../src/core/ModuleBase.cpp ../src/core/AppManager.cpp ../src/core/EventSystem.cpp ../src/core/ConfigManager.cpp ../src/ui/FloatingBall.cpp ../src/ui/SettingsDialog.cpp ../src/modules/screenshot/ScreenshotManager.cpp ../src/modules/screenshot/ScreenshotSelector.cpp ../src/modules/chat/ChatManager.cpp ../src/modules/translate/TranslateUI.cpp ../src/modules/translate/Translator.cpp ../src/modules/translate/Translator_deeplx.cpp ../src/third_party/QHotkey/qhotkey.cpp ../src/third_party/QHotkey/qhotkey_mac.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -872,11 +878,11 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: ../../../../anaconda3/mkspecs/features/data/dummy.cpp
-	/Library/Developer/CommandLineTools/usr/bin/clang++ -pipe -stdlib=libc++ -DQ_OS_MAC -F/System/Library/Frameworks -O2 -std=gnu++1y $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.13 -Wall -Wextra -dM -E -o moc_predefs.h ../../../../anaconda3/mkspecs/features/data/dummy.cpp
+	/Library/Developer/CommandLineTools/usr/bin/clang++ -pipe -stdlib=libc++ -DQ_OS_MAC -O2 -std=gnu++1y $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.13 -Wall -Wextra -dM -E -o moc_predefs.h ../../../../anaconda3/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_ModuleBase.cpp moc_ConfigManager.cpp moc_FloatingBall.cpp moc_SettingsDialog.cpp moc_ScreenshotManager.cpp moc_ScreenshotSelector.cpp moc_ChatManager.cpp moc_TranslateUI.cpp moc_TranslateManager.cpp moc_qhotkey.cpp moc_qhotkey_p.cpp
+compiler_moc_header_make_all: moc_ModuleBase.cpp moc_ConfigManager.cpp moc_FloatingBall.cpp moc_SettingsDialog.cpp moc_ScreenshotManager.cpp moc_ScreenshotSelector.cpp moc_ChatManager.cpp moc_TranslateUI.cpp moc_Translator.cpp moc_Translator_deeplx.cpp moc_qhotkey.cpp moc_qhotkey_p.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_ModuleBase.cpp moc_ConfigManager.cpp moc_FloatingBall.cpp moc_SettingsDialog.cpp moc_ScreenshotManager.cpp moc_ScreenshotSelector.cpp moc_ChatManager.cpp moc_TranslateUI.cpp moc_TranslateManager.cpp moc_qhotkey.cpp moc_qhotkey_p.cpp
+	-$(DEL_FILE) moc_ModuleBase.cpp moc_ConfigManager.cpp moc_FloatingBall.cpp moc_SettingsDialog.cpp moc_ScreenshotManager.cpp moc_ScreenshotSelector.cpp moc_ChatManager.cpp moc_TranslateUI.cpp moc_Translator.cpp moc_Translator_deeplx.cpp moc_qhotkey.cpp moc_qhotkey_p.cpp
 moc_ModuleBase.cpp: ../src/core/ModuleBase.h \
 		../../../../anaconda3/include/qt/QtCore/QObject \
 		../../../../anaconda3/include/qt/QtCore/qobject.h \
@@ -1152,15 +1158,13 @@ moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtCore/qloggingcategory.h \
 		../src/core/AppManager.h \
 		../../../../anaconda3/include/qt/QtCore/QDebug \
+		../../../../anaconda3/include/qt/QtCore/QString \
 		../src/core/ConfigManager.h \
 		../src/core/ModuleBase.h \
 		../../../../anaconda3/include/qt/QtCore/QSettings \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
-		../../../../anaconda3/include/qt/QtCore/QString \
-		../src/modules/chat/ChatManager.h \
-		../../../../anaconda3/include/qt/QtWidgets/QMainWindow \
-		../../../../anaconda3/include/qt/QtWidgets/qmainwindow.h \
-		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
+		../src/core/EventSystem.h \
+		../src/modules/translate/TranslateUI.h \
 		../../../../anaconda3/include/qt/QtWidgets/QTextEdit \
 		../../../../anaconda3/include/qt/QtWidgets/qtextedit.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractscrollarea.h \
@@ -1170,8 +1174,21 @@ moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtGui/qtextcursor.h \
 		../../../../anaconda3/include/qt/QtGui/qtextformat.h \
 		../../../../anaconda3/include/qt/QtGui/qpen.h \
-		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
-		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
+		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
+		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
+		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
+		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
+		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
+		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
+		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
+		../src/modules/translate/Translator.h \
 		../../../../anaconda3/include/qt/QtNetwork/QNetworkAccessManager \
 		../../../../anaconda3/include/qt/QtNetwork/qnetworkaccessmanager.h \
 		../../../../anaconda3/include/qt/QtNetwork/qtnetworkglobal.h \
@@ -1195,6 +1212,14 @@ moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtNetwork/QSslPreSharedKeyAuthenticator \
 		../../../../anaconda3/include/qt/QtNetwork/qsslpresharedkeyauthenticator.h \
 		../../../../anaconda3/include/qt/QtCore/QMetaType \
+		../../../../anaconda3/include/qt/QtGui/QClipboard \
+		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../src/modules/translate/Translator_deeplx.h \
+		../src/modules/chat/ChatManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QMainWindow \
+		../../../../anaconda3/include/qt/QtWidgets/qmainwindow.h \
+		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
+		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
 		../../../../anaconda3/include/qt/QtNetwork/QNetworkReply \
 		../../../../anaconda3/include/qt/QtNetwork/qnetworkreply.h \
 		../../../../anaconda3/include/qt/QtCore/QIODevice \
@@ -1204,7 +1229,6 @@ moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtCore/qjsonvalue.h \
 		../../../../anaconda3/include/qt/QtCore/qcborvalue.h \
 		../../../../anaconda3/include/qt/QtCore/qcborcommon.h \
-		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
 		../../../../anaconda3/include/qt/QtCore/quuid.h \
 		../../../../anaconda3/include/qt/QtCore/QJsonObject \
 		../../../../anaconda3/include/qt/QtCore/qjsonobject.h \
@@ -1214,17 +1238,7 @@ moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtWidgets/qlistwidget.h \
 		../../../../anaconda3/include/qt/QtWidgets/qlistview.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractitemview.h \
-		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
 		../../../../anaconda3/include/qt/QtCore/qitemselectionmodel.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
-		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
-		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
-		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
-		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
-		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
-		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
 		../../../../anaconda3/include/qt/QtWidgets/QSplitter \
 		../../../../anaconda3/include/qt/QtWidgets/qsplitter.h \
 		../../../../anaconda3/include/qt/QtGui/QScreen \
@@ -1237,8 +1251,6 @@ moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtCore/QDateTime \
 		../../../../anaconda3/include/qt/QtWidgets/QDialog \
 		../../../../anaconda3/include/qt/QtWidgets/qdialog.h \
-		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
-		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
 		../../../../anaconda3/include/qt/QtWidgets/QLabel \
 		../../../../anaconda3/include/qt/QtWidgets/qlabel.h \
 		../../../../anaconda3/include/qt/QtGui/QCloseEvent \
@@ -1254,10 +1266,6 @@ moc_FloatingBall.cpp: ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtWidgets/QFormLayout \
 		../../../../anaconda3/include/qt/QtWidgets/qformlayout.h \
 		../../../../anaconda3/include/qt/QtWidgets/QLayout \
-		../src/modules/translate/TranslateUI.h \
-		../src/modules/translate/TranslateManager.h \
-		../../../../anaconda3/include/qt/QtGui/QClipboard \
-		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
 	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/Documents/qt/FloatingBall/src/third_party/QHotkey -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/ui/FloatingBall.h -o moc_FloatingBall.cpp
@@ -1402,6 +1410,50 @@ moc_SettingsDialog.cpp: ../src/ui/SettingsDialog.h \
 		../../../../anaconda3/include/qt/QtCore/QObject \
 		../../../../anaconda3/include/qt/QtCore/QSettings \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
+		../src/core/EventSystem.h \
+		../src/modules/translate/TranslateUI.h \
+		../../../../anaconda3/include/qt/QtWidgets/QWidget \
+		../../../../anaconda3/include/qt/QtWidgets/QPushButton \
+		../../../../anaconda3/include/qt/QtWidgets/qpushbutton.h \
+		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
+		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
+		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
+		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
+		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
+		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
+		../src/modules/translate/Translator.h \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkAccessManager \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkaccessmanager.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetworkglobal.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetwork-config.h \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkrequest.h \
+		../../../../anaconda3/include/qt/QtCore/QSharedDataPointer \
+		../../../../anaconda3/include/qt/QtCore/QUrl \
+		../../../../anaconda3/include/qt/QtCore/QVariant \
+		../../../../anaconda3/include/qt/QtCore/QVector \
+		../../../../anaconda3/include/qt/QtNetwork/QSslConfiguration \
+		../../../../anaconda3/include/qt/QtNetwork/qsslconfiguration.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtcpsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qabstractsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslerror.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslcertificate.h \
+		../../../../anaconda3/include/qt/QtCore/qcryptographichash.h \
+		../../../../anaconda3/include/qt/QtCore/qdatetime.h \
+		../../../../anaconda3/include/qt/QtNetwork/qssl.h \
+		../../../../anaconda3/include/qt/QtCore/QFlags \
+		../../../../anaconda3/include/qt/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../anaconda3/include/qt/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../anaconda3/include/qt/QtCore/QMetaType \
+		../../../../anaconda3/include/qt/QtGui/QClipboard \
+		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../src/modules/translate/Translator_deeplx.h \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
 	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/Documents/qt/FloatingBall/src/third_party/QHotkey -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/ui/SettingsDialog.h -o moc_SettingsDialog.cpp
@@ -1847,6 +1899,13 @@ moc_ChatManager.cpp: ../src/modules/chat/ChatManager.h \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
 		../src/core/AppManager.h \
 		../../../../anaconda3/include/qt/QtCore/QDebug \
+		../src/core/EventSystem.h \
+		../src/modules/translate/TranslateUI.h \
+		../../../../anaconda3/include/qt/QtWidgets/QWidget \
+		../src/modules/translate/Translator.h \
+		../../../../anaconda3/include/qt/QtGui/QClipboard \
+		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../src/modules/translate/Translator_deeplx.h \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
 	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/Documents/qt/FloatingBall/src/third_party/QHotkey -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/modules/chat/ChatManager.h -o moc_ChatManager.cpp
@@ -1968,7 +2027,21 @@ moc_TranslateUI.cpp: ../src/modules/translate/TranslateUI.h \
 		../../../../anaconda3/include/qt/QtWidgets/qpushbutton.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractbutton.h \
 		../../../../anaconda3/include/qt/QtGui/qicon.h \
-		../src/modules/translate/TranslateManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
+		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
+		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
+		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
+		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
+		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
+		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
+		../src/modules/translate/Translator.h \
 		../../../../anaconda3/include/qt/QtCore/QObject \
 		../../../../anaconda3/include/qt/QtCore/QString \
 		../../../../anaconda3/include/qt/QtCore/QDebug \
@@ -1997,11 +2070,19 @@ moc_TranslateUI.cpp: ../src/modules/translate/TranslateUI.h \
 		../../../../anaconda3/include/qt/QtCore/QMetaType \
 		../../../../anaconda3/include/qt/QtGui/QClipboard \
 		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../src/core/AppManager.h \
+		../src/core/ConfigManager.h \
+		../src/core/ModuleBase.h \
+		../../../../anaconda3/include/qt/QtCore/QSettings \
+		../../../../anaconda3/include/qt/QtCore/qsettings.h \
+		../src/core/EventSystem.h \
+		../src/modules/translate/TranslateUI.h \
+		../src/modules/translate/Translator_deeplx.h \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
 	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/Documents/qt/FloatingBall/src/third_party/QHotkey -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/modules/translate/TranslateUI.h -o moc_TranslateUI.cpp
 
-moc_TranslateManager.cpp: ../src/modules/translate/TranslateManager.h \
+moc_Translator.cpp: ../src/modules/translate/Translator.h \
 		../../../../anaconda3/include/qt/QtCore/QObject \
 		../../../../anaconda3/include/qt/QtCore/qobject.h \
 		../../../../anaconda3/include/qt/QtCore/qobjectdefs.h \
@@ -2100,7 +2181,109 @@ moc_TranslateManager.cpp: ../src/modules/translate/TranslateManager.h \
 		../../../../anaconda3/include/qt/QtGui/qtgui-config.h \
 		moc_predefs.h \
 		../../../../anaconda3/bin/moc
-	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/Documents/qt/FloatingBall/src/third_party/QHotkey -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/modules/translate/TranslateManager.h -o moc_TranslateManager.cpp
+	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/Documents/qt/FloatingBall/src/third_party/QHotkey -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/modules/translate/Translator.h -o moc_Translator.cpp
+
+moc_Translator_deeplx.cpp: ../src/modules/translate/Translator_deeplx.h \
+		../../../../anaconda3/include/qt/QtCore/QObject \
+		../../../../anaconda3/include/qt/QtCore/qobject.h \
+		../../../../anaconda3/include/qt/QtCore/qobjectdefs.h \
+		../../../../anaconda3/include/qt/QtCore/qnamespace.h \
+		../../../../anaconda3/include/qt/QtCore/qglobal.h \
+		../../../../anaconda3/include/qt/QtCore/qconfig-bootstrapped.h \
+		../../../../anaconda3/include/qt/QtCore/qconfig.h \
+		../../../../anaconda3/include/qt/QtCore/qtcore-config.h \
+		../../../../anaconda3/include/qt/QtCore/qsystemdetection.h \
+		../../../../anaconda3/include/qt/QtCore/qprocessordetection.h \
+		../../../../anaconda3/include/qt/QtCore/qcompilerdetection.h \
+		../../../../anaconda3/include/qt/QtCore/qtypeinfo.h \
+		../../../../anaconda3/include/qt/QtCore/qsysinfo.h \
+		../../../../anaconda3/include/qt/QtCore/qlogging.h \
+		../../../../anaconda3/include/qt/QtCore/qflags.h \
+		../../../../anaconda3/include/qt/QtCore/qatomic.h \
+		../../../../anaconda3/include/qt/QtCore/qbasicatomic.h \
+		../../../../anaconda3/include/qt/QtCore/qatomic_bootstrap.h \
+		../../../../anaconda3/include/qt/QtCore/qgenericatomic.h \
+		../../../../anaconda3/include/qt/QtCore/qatomic_cxx11.h \
+		../../../../anaconda3/include/qt/QtCore/qatomic_msvc.h \
+		../../../../anaconda3/include/qt/QtCore/qglobalstatic.h \
+		../../../../anaconda3/include/qt/QtCore/qmutex.h \
+		../../../../anaconda3/include/qt/QtCore/qnumeric.h \
+		../../../../anaconda3/include/qt/QtCore/qversiontagging.h \
+		../../../../anaconda3/include/qt/QtCore/qobjectdefs_impl.h \
+		../../../../anaconda3/include/qt/QtCore/qstring.h \
+		../../../../anaconda3/include/qt/QtCore/qchar.h \
+		../../../../anaconda3/include/qt/QtCore/qbytearray.h \
+		../../../../anaconda3/include/qt/QtCore/qrefcount.h \
+		../../../../anaconda3/include/qt/QtCore/qarraydata.h \
+		../../../../anaconda3/include/qt/QtCore/qstringliteral.h \
+		../../../../anaconda3/include/qt/QtCore/qstringalgorithms.h \
+		../../../../anaconda3/include/qt/QtCore/qstringview.h \
+		../../../../anaconda3/include/qt/QtCore/qstringbuilder.h \
+		../../../../anaconda3/include/qt/QtCore/qlist.h \
+		../../../../anaconda3/include/qt/QtCore/qalgorithms.h \
+		../../../../anaconda3/include/qt/QtCore/qiterator.h \
+		../../../../anaconda3/include/qt/QtCore/qhashfunctions.h \
+		../../../../anaconda3/include/qt/QtCore/qpair.h \
+		../../../../anaconda3/include/qt/QtCore/qvector.h \
+		../../../../anaconda3/include/qt/QtCore/qcontainertools_impl.h \
+		../../../../anaconda3/include/qt/QtCore/qpoint.h \
+		../../../../anaconda3/include/qt/QtCore/qbytearraylist.h \
+		../../../../anaconda3/include/qt/QtCore/qstringlist.h \
+		../../../../anaconda3/include/qt/QtCore/qregexp.h \
+		../../../../anaconda3/include/qt/QtCore/qstringmatcher.h \
+		../../../../anaconda3/include/qt/QtCore/qcoreevent.h \
+		../../../../anaconda3/include/qt/QtCore/qscopedpointer.h \
+		../../../../anaconda3/include/qt/QtCore/qmetatype.h \
+		../../../../anaconda3/include/qt/QtCore/qvarlengtharray.h \
+		../../../../anaconda3/include/qt/QtCore/qcontainerfwd.h \
+		../../../../anaconda3/include/qt/QtCore/qobject_impl.h \
+		../../../../anaconda3/include/qt/QtCore/QString \
+		../../../../anaconda3/include/qt/QtCore/QDebug \
+		../../../../anaconda3/include/qt/QtCore/qdebug.h \
+		../../../../anaconda3/include/qt/QtCore/qhash.h \
+		../../../../anaconda3/include/qt/QtCore/qmap.h \
+		../../../../anaconda3/include/qt/QtCore/qtextstream.h \
+		../../../../anaconda3/include/qt/QtCore/qiodevice.h \
+		../../../../anaconda3/include/qt/QtCore/qlocale.h \
+		../../../../anaconda3/include/qt/QtCore/qvariant.h \
+		../../../../anaconda3/include/qt/QtCore/qshareddata.h \
+		../../../../anaconda3/include/qt/QtCore/qset.h \
+		../../../../anaconda3/include/qt/QtCore/qcontiguouscache.h \
+		../../../../anaconda3/include/qt/QtCore/qsharedpointer.h \
+		../../../../anaconda3/include/qt/QtCore/qsharedpointer_impl.h \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkAccessManager \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkaccessmanager.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetworkglobal.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetwork-config.h \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkrequest.h \
+		../../../../anaconda3/include/qt/QtCore/QSharedDataPointer \
+		../../../../anaconda3/include/qt/QtCore/QUrl \
+		../../../../anaconda3/include/qt/QtCore/qurl.h \
+		../../../../anaconda3/include/qt/QtCore/qurlquery.h \
+		../../../../anaconda3/include/qt/QtCore/QVariant \
+		../../../../anaconda3/include/qt/QtCore/QVector \
+		../../../../anaconda3/include/qt/QtNetwork/QSslConfiguration \
+		../../../../anaconda3/include/qt/QtNetwork/qsslconfiguration.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtcpsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qabstractsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslerror.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslcertificate.h \
+		../../../../anaconda3/include/qt/QtCore/qcryptographichash.h \
+		../../../../anaconda3/include/qt/QtCore/qdatetime.h \
+		../../../../anaconda3/include/qt/QtNetwork/qssl.h \
+		../../../../anaconda3/include/qt/QtCore/QFlags \
+		../../../../anaconda3/include/qt/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../anaconda3/include/qt/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../anaconda3/include/qt/QtCore/QMetaType \
+		../src/modules/translate/Translator.h \
+		../../../../anaconda3/include/qt/QtGui/QClipboard \
+		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../../../../anaconda3/include/qt/QtGui/qtguiglobal.h \
+		../../../../anaconda3/include/qt/QtGui/qtgui-config.h \
+		moc_predefs.h \
+		../../../../anaconda3/bin/moc
+	/Users/tp/anaconda3/bin/moc $(DEFINES) --include /Users/tp/Documents/qt/FloatingBall/build/moc_predefs.h -I/Users/tp/anaconda3/mkspecs/macx-clang -I/Users/tp/Documents/qt/FloatingBall -I/Users/tp/Documents/qt/FloatingBall/src -I/Users/tp/Documents/qt/FloatingBall/src/core -I/Users/tp/Documents/qt/FloatingBall/src/ui -I/Users/tp/Documents/qt/FloatingBall/src/third_party/QHotkey -I/Users/tp/anaconda3/include/qt -I/Users/tp/anaconda3/include/qt/QtWidgets -I/Users/tp/anaconda3/include/qt/QtGui -I/Users/tp/anaconda3/include/qt/QtNetwork -I/Users/tp/anaconda3/include/qt/QtCore -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -I/Library/Developer/CommandLineTools/usr/include ../src/modules/translate/Translator_deeplx.h -o moc_Translator_deeplx.cpp
 
 moc_qhotkey.cpp: ../src/third_party/QHotkey/qhotkey.h \
 		../../../../anaconda3/include/qt/QtCore/QObject \
@@ -2430,15 +2613,13 @@ main.o: ../src/main.cpp ../../../../anaconda3/include/qt/QtWidgets/QApplication 
 		../../../../anaconda3/include/qt/QtCore/qloggingcategory.h \
 		../src/core/AppManager.h \
 		../../../../anaconda3/include/qt/QtCore/QDebug \
+		../../../../anaconda3/include/qt/QtCore/QString \
 		../src/core/ConfigManager.h \
 		../src/core/ModuleBase.h \
 		../../../../anaconda3/include/qt/QtCore/QSettings \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
-		../../../../anaconda3/include/qt/QtCore/QString \
-		../src/modules/chat/ChatManager.h \
-		../../../../anaconda3/include/qt/QtWidgets/QMainWindow \
-		../../../../anaconda3/include/qt/QtWidgets/qmainwindow.h \
-		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
+		../src/core/EventSystem.h \
+		../src/modules/translate/TranslateUI.h \
 		../../../../anaconda3/include/qt/QtWidgets/QTextEdit \
 		../../../../anaconda3/include/qt/QtWidgets/qtextedit.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractscrollarea.h \
@@ -2448,8 +2629,21 @@ main.o: ../src/main.cpp ../../../../anaconda3/include/qt/QtWidgets/QApplication 
 		../../../../anaconda3/include/qt/QtGui/qtextcursor.h \
 		../../../../anaconda3/include/qt/QtGui/qtextformat.h \
 		../../../../anaconda3/include/qt/QtGui/qpen.h \
-		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
-		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
+		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
+		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
+		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
+		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
+		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
+		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
+		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
+		../src/modules/translate/Translator.h \
 		../../../../anaconda3/include/qt/QtNetwork/QNetworkAccessManager \
 		../../../../anaconda3/include/qt/QtNetwork/qnetworkaccessmanager.h \
 		../../../../anaconda3/include/qt/QtNetwork/qtnetworkglobal.h \
@@ -2473,6 +2667,14 @@ main.o: ../src/main.cpp ../../../../anaconda3/include/qt/QtWidgets/QApplication 
 		../../../../anaconda3/include/qt/QtNetwork/QSslPreSharedKeyAuthenticator \
 		../../../../anaconda3/include/qt/QtNetwork/qsslpresharedkeyauthenticator.h \
 		../../../../anaconda3/include/qt/QtCore/QMetaType \
+		../../../../anaconda3/include/qt/QtGui/QClipboard \
+		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../src/modules/translate/Translator_deeplx.h \
+		../src/modules/chat/ChatManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QMainWindow \
+		../../../../anaconda3/include/qt/QtWidgets/qmainwindow.h \
+		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
+		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
 		../../../../anaconda3/include/qt/QtNetwork/QNetworkReply \
 		../../../../anaconda3/include/qt/QtNetwork/qnetworkreply.h \
 		../../../../anaconda3/include/qt/QtCore/QIODevice \
@@ -2482,7 +2684,6 @@ main.o: ../src/main.cpp ../../../../anaconda3/include/qt/QtWidgets/QApplication 
 		../../../../anaconda3/include/qt/QtCore/qjsonvalue.h \
 		../../../../anaconda3/include/qt/QtCore/qcborvalue.h \
 		../../../../anaconda3/include/qt/QtCore/qcborcommon.h \
-		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
 		../../../../anaconda3/include/qt/QtCore/quuid.h \
 		../../../../anaconda3/include/qt/QtCore/QJsonObject \
 		../../../../anaconda3/include/qt/QtCore/qjsonobject.h \
@@ -2492,17 +2693,7 @@ main.o: ../src/main.cpp ../../../../anaconda3/include/qt/QtWidgets/QApplication 
 		../../../../anaconda3/include/qt/QtWidgets/qlistwidget.h \
 		../../../../anaconda3/include/qt/QtWidgets/qlistview.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractitemview.h \
-		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
 		../../../../anaconda3/include/qt/QtCore/qitemselectionmodel.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
-		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
-		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
-		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
-		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
-		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
-		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
 		../../../../anaconda3/include/qt/QtWidgets/QSplitter \
 		../../../../anaconda3/include/qt/QtWidgets/qsplitter.h \
 		../../../../anaconda3/include/qt/QtGui/QScreen \
@@ -2515,8 +2706,6 @@ main.o: ../src/main.cpp ../../../../anaconda3/include/qt/QtWidgets/QApplication 
 		../../../../anaconda3/include/qt/QtCore/QDateTime \
 		../../../../anaconda3/include/qt/QtWidgets/QDialog \
 		../../../../anaconda3/include/qt/QtWidgets/qdialog.h \
-		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
-		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
 		../../../../anaconda3/include/qt/QtWidgets/QLabel \
 		../../../../anaconda3/include/qt/QtWidgets/qlabel.h \
 		../../../../anaconda3/include/qt/QtGui/QCloseEvent \
@@ -2532,10 +2721,6 @@ main.o: ../src/main.cpp ../../../../anaconda3/include/qt/QtWidgets/QApplication 
 		../../../../anaconda3/include/qt/QtWidgets/QFormLayout \
 		../../../../anaconda3/include/qt/QtWidgets/qformlayout.h \
 		../../../../anaconda3/include/qt/QtWidgets/QLayout \
-		../src/modules/translate/TranslateUI.h \
-		../src/modules/translate/TranslateManager.h \
-		../../../../anaconda3/include/qt/QtGui/QClipboard \
-		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
 		../../../../anaconda3/include/qt/QtCore/QDir \
 		../../../../anaconda3/include/qt/QtCore/qdir.h \
 		../../../../anaconda3/include/qt/QtCore/qfileinfo.h
@@ -2663,12 +2848,12 @@ AppManager.o: ../src/core/AppManager.cpp ../src/core/AppManager.h \
 		../../../../anaconda3/include/qt/QtCore/qcontiguouscache.h \
 		../../../../anaconda3/include/qt/QtCore/qsharedpointer.h \
 		../../../../anaconda3/include/qt/QtCore/qsharedpointer_impl.h \
+		../../../../anaconda3/include/qt/QtCore/QString \
 		../src/core/ConfigManager.h \
 		../src/core/ModuleBase.h \
 		../../../../anaconda3/include/qt/QtCore/QObject \
 		../../../../anaconda3/include/qt/QtCore/QSettings \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
-		../../../../anaconda3/include/qt/QtCore/QString \
 		../src/core/EventSystem.h \
 		../src/modules/translate/TranslateUI.h \
 		../../../../anaconda3/include/qt/QtWidgets/QWidget \
@@ -2723,7 +2908,21 @@ AppManager.o: ../src/core/AppManager.cpp ../src/core/AppManager.h \
 		../../../../anaconda3/include/qt/QtWidgets/qpushbutton.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractbutton.h \
 		../../../../anaconda3/include/qt/QtGui/qicon.h \
-		../src/modules/translate/TranslateManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
+		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
+		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
+		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
+		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
+		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
+		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
+		../src/modules/translate/Translator.h \
 		../../../../anaconda3/include/qt/QtNetwork/QNetworkAccessManager \
 		../../../../anaconda3/include/qt/QtNetwork/qnetworkaccessmanager.h \
 		../../../../anaconda3/include/qt/QtNetwork/qtnetworkglobal.h \
@@ -2748,7 +2947,8 @@ AppManager.o: ../src/core/AppManager.cpp ../src/core/AppManager.h \
 		../../../../anaconda3/include/qt/QtNetwork/qsslpresharedkeyauthenticator.h \
 		../../../../anaconda3/include/qt/QtCore/QMetaType \
 		../../../../anaconda3/include/qt/QtGui/QClipboard \
-		../../../../anaconda3/include/qt/QtGui/qclipboard.h
+		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../src/modules/translate/Translator_deeplx.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o AppManager.o ../src/core/AppManager.cpp
 
 EventSystem.o: ../src/core/EventSystem.cpp ../src/core/EventSystem.h \
@@ -3036,15 +3236,13 @@ FloatingBall.o: ../src/ui/FloatingBall.cpp ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtCore/qloggingcategory.h \
 		../src/core/AppManager.h \
 		../../../../anaconda3/include/qt/QtCore/QDebug \
+		../../../../anaconda3/include/qt/QtCore/QString \
 		../src/core/ConfigManager.h \
 		../src/core/ModuleBase.h \
 		../../../../anaconda3/include/qt/QtCore/QSettings \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
-		../../../../anaconda3/include/qt/QtCore/QString \
-		../src/modules/chat/ChatManager.h \
-		../../../../anaconda3/include/qt/QtWidgets/QMainWindow \
-		../../../../anaconda3/include/qt/QtWidgets/qmainwindow.h \
-		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
+		../src/core/EventSystem.h \
+		../src/modules/translate/TranslateUI.h \
 		../../../../anaconda3/include/qt/QtWidgets/QTextEdit \
 		../../../../anaconda3/include/qt/QtWidgets/qtextedit.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractscrollarea.h \
@@ -3054,8 +3252,21 @@ FloatingBall.o: ../src/ui/FloatingBall.cpp ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtGui/qtextcursor.h \
 		../../../../anaconda3/include/qt/QtGui/qtextformat.h \
 		../../../../anaconda3/include/qt/QtGui/qpen.h \
-		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
-		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
+		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
+		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
+		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
+		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
+		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
+		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
+		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
+		../src/modules/translate/Translator.h \
 		../../../../anaconda3/include/qt/QtNetwork/QNetworkAccessManager \
 		../../../../anaconda3/include/qt/QtNetwork/qnetworkaccessmanager.h \
 		../../../../anaconda3/include/qt/QtNetwork/qtnetworkglobal.h \
@@ -3079,6 +3290,14 @@ FloatingBall.o: ../src/ui/FloatingBall.cpp ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtNetwork/QSslPreSharedKeyAuthenticator \
 		../../../../anaconda3/include/qt/QtNetwork/qsslpresharedkeyauthenticator.h \
 		../../../../anaconda3/include/qt/QtCore/QMetaType \
+		../../../../anaconda3/include/qt/QtGui/QClipboard \
+		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../src/modules/translate/Translator_deeplx.h \
+		../src/modules/chat/ChatManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QMainWindow \
+		../../../../anaconda3/include/qt/QtWidgets/qmainwindow.h \
+		../../../../anaconda3/include/qt/QtWidgets/QLineEdit \
+		../../../../anaconda3/include/qt/QtWidgets/qlineedit.h \
 		../../../../anaconda3/include/qt/QtNetwork/QNetworkReply \
 		../../../../anaconda3/include/qt/QtNetwork/qnetworkreply.h \
 		../../../../anaconda3/include/qt/QtCore/QIODevice \
@@ -3088,7 +3307,6 @@ FloatingBall.o: ../src/ui/FloatingBall.cpp ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtCore/qjsonvalue.h \
 		../../../../anaconda3/include/qt/QtCore/qcborvalue.h \
 		../../../../anaconda3/include/qt/QtCore/qcborcommon.h \
-		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
 		../../../../anaconda3/include/qt/QtCore/quuid.h \
 		../../../../anaconda3/include/qt/QtCore/QJsonObject \
 		../../../../anaconda3/include/qt/QtCore/qjsonobject.h \
@@ -3098,17 +3316,7 @@ FloatingBall.o: ../src/ui/FloatingBall.cpp ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtWidgets/qlistwidget.h \
 		../../../../anaconda3/include/qt/QtWidgets/qlistview.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractitemview.h \
-		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
 		../../../../anaconda3/include/qt/QtCore/qitemselectionmodel.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
-		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
-		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
-		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
-		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
-		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
-		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
 		../../../../anaconda3/include/qt/QtWidgets/QSplitter \
 		../../../../anaconda3/include/qt/QtWidgets/qsplitter.h \
 		../../../../anaconda3/include/qt/QtGui/QScreen \
@@ -3121,8 +3329,6 @@ FloatingBall.o: ../src/ui/FloatingBall.cpp ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtCore/QDateTime \
 		../../../../anaconda3/include/qt/QtWidgets/QDialog \
 		../../../../anaconda3/include/qt/QtWidgets/qdialog.h \
-		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
-		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
 		../../../../anaconda3/include/qt/QtWidgets/QLabel \
 		../../../../anaconda3/include/qt/QtWidgets/qlabel.h \
 		../../../../anaconda3/include/qt/QtGui/QCloseEvent \
@@ -3138,10 +3344,6 @@ FloatingBall.o: ../src/ui/FloatingBall.cpp ../src/ui/FloatingBall.h \
 		../../../../anaconda3/include/qt/QtWidgets/QFormLayout \
 		../../../../anaconda3/include/qt/QtWidgets/qformlayout.h \
 		../../../../anaconda3/include/qt/QtWidgets/QLayout \
-		../src/modules/translate/TranslateUI.h \
-		../src/modules/translate/TranslateManager.h \
-		../../../../anaconda3/include/qt/QtGui/QClipboard \
-		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
 		../../../../anaconda3/include/qt/QtGui/QPainter \
 		../../../../anaconda3/include/qt/QtGui/qpainter.h \
 		../../../../anaconda3/include/qt/QtGui/QMouseEvent \
@@ -3304,18 +3506,13 @@ SettingsDialog.o: ../src/ui/SettingsDialog.cpp ../src/ui/SettingsDialog.h \
 		../../../../anaconda3/include/qt/QtCore/QObject \
 		../../../../anaconda3/include/qt/QtCore/QSettings \
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
-		../../../../anaconda3/include/qt/QtWidgets/QVBoxLayout \
-		../../../../anaconda3/include/qt/QtWidgets/QHBoxLayout \
-		../../../../anaconda3/include/qt/QtWidgets/QLabel \
-		../../../../anaconda3/include/qt/QtWidgets/qlabel.h \
+		../src/core/EventSystem.h \
+		../src/modules/translate/TranslateUI.h \
+		../../../../anaconda3/include/qt/QtWidgets/QWidget \
 		../../../../anaconda3/include/qt/QtWidgets/QPushButton \
 		../../../../anaconda3/include/qt/QtWidgets/qpushbutton.h \
-		../../../../anaconda3/include/qt/QtWidgets/QListWidget \
-		../../../../anaconda3/include/qt/QtWidgets/qlistwidget.h \
-		../../../../anaconda3/include/qt/QtWidgets/qlistview.h \
-		../../../../anaconda3/include/qt/QtWidgets/qabstractitemview.h \
-		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
-		../../../../anaconda3/include/qt/QtCore/qitemselectionmodel.h \
+		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
+		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
 		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
@@ -3324,7 +3521,44 @@ SettingsDialog.o: ../src/ui/SettingsDialog.cpp ../src/ui/SettingsDialog.h \
 		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
 		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
 		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
-		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h
+		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
+		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
+		../src/modules/translate/Translator.h \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkAccessManager \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkaccessmanager.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetworkglobal.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetwork-config.h \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkrequest.h \
+		../../../../anaconda3/include/qt/QtCore/QSharedDataPointer \
+		../../../../anaconda3/include/qt/QtCore/QUrl \
+		../../../../anaconda3/include/qt/QtCore/QVariant \
+		../../../../anaconda3/include/qt/QtCore/QVector \
+		../../../../anaconda3/include/qt/QtNetwork/QSslConfiguration \
+		../../../../anaconda3/include/qt/QtNetwork/qsslconfiguration.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtcpsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qabstractsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslerror.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslcertificate.h \
+		../../../../anaconda3/include/qt/QtCore/qcryptographichash.h \
+		../../../../anaconda3/include/qt/QtCore/qdatetime.h \
+		../../../../anaconda3/include/qt/QtNetwork/qssl.h \
+		../../../../anaconda3/include/qt/QtCore/QFlags \
+		../../../../anaconda3/include/qt/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../anaconda3/include/qt/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../anaconda3/include/qt/QtCore/QMetaType \
+		../../../../anaconda3/include/qt/QtGui/QClipboard \
+		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../src/modules/translate/Translator_deeplx.h \
+		../../../../anaconda3/include/qt/QtWidgets/QVBoxLayout \
+		../../../../anaconda3/include/qt/QtWidgets/QHBoxLayout \
+		../../../../anaconda3/include/qt/QtWidgets/QLabel \
+		../../../../anaconda3/include/qt/QtWidgets/qlabel.h \
+		../../../../anaconda3/include/qt/QtWidgets/QListWidget \
+		../../../../anaconda3/include/qt/QtWidgets/qlistwidget.h \
+		../../../../anaconda3/include/qt/QtWidgets/qlistview.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemview.h \
+		../../../../anaconda3/include/qt/QtCore/qitemselectionmodel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SettingsDialog.o ../src/ui/SettingsDialog.cpp
 
 ScreenshotManager.o: ../src/modules/screenshot/ScreenshotManager.cpp ../src/modules/screenshot/ScreenshotManager.h \
@@ -3809,7 +4043,13 @@ ChatManager.o: ../src/modules/chat/ChatManager.cpp ../src/modules/chat/ChatManag
 		../../../../anaconda3/include/qt/QtCore/qsettings.h \
 		../src/core/AppManager.h \
 		../../../../anaconda3/include/qt/QtCore/QDebug \
+		../src/core/EventSystem.h \
+		../src/modules/translate/TranslateUI.h \
 		../../../../anaconda3/include/qt/QtWidgets/QWidget \
+		../src/modules/translate/Translator.h \
+		../../../../anaconda3/include/qt/QtGui/QClipboard \
+		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../src/modules/translate/Translator_deeplx.h \
 		../../../../anaconda3/include/qt/QtWidgets/QApplication \
 		../../../../anaconda3/include/qt/QtWidgets/qapplication.h \
 		../../../../anaconda3/include/qt/QtCore/qcoreapplication.h \
@@ -3936,7 +4176,21 @@ TranslateUI.o: ../src/modules/translate/TranslateUI.cpp ../src/modules/translate
 		../../../../anaconda3/include/qt/QtWidgets/qpushbutton.h \
 		../../../../anaconda3/include/qt/QtWidgets/qabstractbutton.h \
 		../../../../anaconda3/include/qt/QtGui/qicon.h \
-		../src/modules/translate/TranslateManager.h \
+		../../../../anaconda3/include/qt/QtWidgets/QComboBox \
+		../../../../anaconda3/include/qt/QtWidgets/qcombobox.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractitemdelegate.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyleoption.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractspinbox.h \
+		../../../../anaconda3/include/qt/QtGui/qvalidator.h \
+		../../../../anaconda3/include/qt/QtCore/qregularexpression.h \
+		../../../../anaconda3/include/qt/QtWidgets/qslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qabstractslider.h \
+		../../../../anaconda3/include/qt/QtWidgets/qstyle.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabbar.h \
+		../../../../anaconda3/include/qt/QtWidgets/qtabwidget.h \
+		../../../../anaconda3/include/qt/QtWidgets/qrubberband.h \
+		../../../../anaconda3/include/qt/QtCore/qabstractitemmodel.h \
+		../src/modules/translate/Translator.h \
 		../../../../anaconda3/include/qt/QtCore/QObject \
 		../../../../anaconda3/include/qt/QtCore/QString \
 		../../../../anaconda3/include/qt/QtCore/QDebug \
@@ -3965,6 +4219,13 @@ TranslateUI.o: ../src/modules/translate/TranslateUI.cpp ../src/modules/translate
 		../../../../anaconda3/include/qt/QtCore/QMetaType \
 		../../../../anaconda3/include/qt/QtGui/QClipboard \
 		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../src/core/AppManager.h \
+		../src/core/ConfigManager.h \
+		../src/core/ModuleBase.h \
+		../../../../anaconda3/include/qt/QtCore/QSettings \
+		../../../../anaconda3/include/qt/QtCore/qsettings.h \
+		../src/core/EventSystem.h \
+		../src/modules/translate/Translator_deeplx.h \
 		../../../../anaconda3/include/qt/QtWidgets/QVBoxLayout \
 		../../../../anaconda3/include/qt/QtWidgets/qboxlayout.h \
 		../../../../anaconda3/include/qt/QtWidgets/qlayout.h \
@@ -3983,10 +4244,12 @@ TranslateUI.o: ../src/modules/translate/TranslateUI.cpp ../src/modules/translate
 		../../../../anaconda3/include/qt/QtCore/QRect \
 		../../../../anaconda3/include/qt/QtCore/QSize \
 		../../../../anaconda3/include/qt/QtCore/QSizeF \
-		../../../../anaconda3/include/qt/QtGui/QTransform
+		../../../../anaconda3/include/qt/QtGui/QTransform \
+		../../../../anaconda3/include/qt/QtWidgets/QLabel \
+		../../../../anaconda3/include/qt/QtWidgets/qlabel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TranslateUI.o ../src/modules/translate/TranslateUI.cpp
 
-TranslateManager.o: ../src/modules/translate/TranslateManager.cpp ../src/modules/translate/TranslateManager.h \
+Translator.o: ../src/modules/translate/Translator.cpp ../src/modules/translate/Translator.h \
 		../../../../anaconda3/include/qt/QtCore/QObject \
 		../../../../anaconda3/include/qt/QtCore/qobject.h \
 		../../../../anaconda3/include/qt/QtCore/qobjectdefs.h \
@@ -4084,7 +4347,108 @@ TranslateManager.o: ../src/modules/translate/TranslateManager.cpp ../src/modules
 		../../../../anaconda3/include/qt/QtGui/qtguiglobal.h \
 		../../../../anaconda3/include/qt/QtGui/qtgui-config.h \
 		../../../../anaconda3/include/qt/QtNetwork
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TranslateManager.o ../src/modules/translate/TranslateManager.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Translator.o ../src/modules/translate/Translator.cpp
+
+Translator_deeplx.o: ../src/modules/translate/Translator_deeplx.cpp ../src/modules/translate/Translator_deeplx.h \
+		../../../../anaconda3/include/qt/QtCore/QObject \
+		../../../../anaconda3/include/qt/QtCore/qobject.h \
+		../../../../anaconda3/include/qt/QtCore/qobjectdefs.h \
+		../../../../anaconda3/include/qt/QtCore/qnamespace.h \
+		../../../../anaconda3/include/qt/QtCore/qglobal.h \
+		../../../../anaconda3/include/qt/QtCore/qconfig-bootstrapped.h \
+		../../../../anaconda3/include/qt/QtCore/qconfig.h \
+		../../../../anaconda3/include/qt/QtCore/qtcore-config.h \
+		../../../../anaconda3/include/qt/QtCore/qsystemdetection.h \
+		../../../../anaconda3/include/qt/QtCore/qprocessordetection.h \
+		../../../../anaconda3/include/qt/QtCore/qcompilerdetection.h \
+		../../../../anaconda3/include/qt/QtCore/qtypeinfo.h \
+		../../../../anaconda3/include/qt/QtCore/qsysinfo.h \
+		../../../../anaconda3/include/qt/QtCore/qlogging.h \
+		../../../../anaconda3/include/qt/QtCore/qflags.h \
+		../../../../anaconda3/include/qt/QtCore/qatomic.h \
+		../../../../anaconda3/include/qt/QtCore/qbasicatomic.h \
+		../../../../anaconda3/include/qt/QtCore/qatomic_bootstrap.h \
+		../../../../anaconda3/include/qt/QtCore/qgenericatomic.h \
+		../../../../anaconda3/include/qt/QtCore/qatomic_cxx11.h \
+		../../../../anaconda3/include/qt/QtCore/qatomic_msvc.h \
+		../../../../anaconda3/include/qt/QtCore/qglobalstatic.h \
+		../../../../anaconda3/include/qt/QtCore/qmutex.h \
+		../../../../anaconda3/include/qt/QtCore/qnumeric.h \
+		../../../../anaconda3/include/qt/QtCore/qversiontagging.h \
+		../../../../anaconda3/include/qt/QtCore/qobjectdefs_impl.h \
+		../../../../anaconda3/include/qt/QtCore/qstring.h \
+		../../../../anaconda3/include/qt/QtCore/qchar.h \
+		../../../../anaconda3/include/qt/QtCore/qbytearray.h \
+		../../../../anaconda3/include/qt/QtCore/qrefcount.h \
+		../../../../anaconda3/include/qt/QtCore/qarraydata.h \
+		../../../../anaconda3/include/qt/QtCore/qstringliteral.h \
+		../../../../anaconda3/include/qt/QtCore/qstringalgorithms.h \
+		../../../../anaconda3/include/qt/QtCore/qstringview.h \
+		../../../../anaconda3/include/qt/QtCore/qstringbuilder.h \
+		../../../../anaconda3/include/qt/QtCore/qlist.h \
+		../../../../anaconda3/include/qt/QtCore/qalgorithms.h \
+		../../../../anaconda3/include/qt/QtCore/qiterator.h \
+		../../../../anaconda3/include/qt/QtCore/qhashfunctions.h \
+		../../../../anaconda3/include/qt/QtCore/qpair.h \
+		../../../../anaconda3/include/qt/QtCore/qvector.h \
+		../../../../anaconda3/include/qt/QtCore/qcontainertools_impl.h \
+		../../../../anaconda3/include/qt/QtCore/qpoint.h \
+		../../../../anaconda3/include/qt/QtCore/qbytearraylist.h \
+		../../../../anaconda3/include/qt/QtCore/qstringlist.h \
+		../../../../anaconda3/include/qt/QtCore/qregexp.h \
+		../../../../anaconda3/include/qt/QtCore/qstringmatcher.h \
+		../../../../anaconda3/include/qt/QtCore/qcoreevent.h \
+		../../../../anaconda3/include/qt/QtCore/qscopedpointer.h \
+		../../../../anaconda3/include/qt/QtCore/qmetatype.h \
+		../../../../anaconda3/include/qt/QtCore/qvarlengtharray.h \
+		../../../../anaconda3/include/qt/QtCore/qcontainerfwd.h \
+		../../../../anaconda3/include/qt/QtCore/qobject_impl.h \
+		../../../../anaconda3/include/qt/QtCore/QString \
+		../../../../anaconda3/include/qt/QtCore/QDebug \
+		../../../../anaconda3/include/qt/QtCore/qdebug.h \
+		../../../../anaconda3/include/qt/QtCore/qhash.h \
+		../../../../anaconda3/include/qt/QtCore/qmap.h \
+		../../../../anaconda3/include/qt/QtCore/qtextstream.h \
+		../../../../anaconda3/include/qt/QtCore/qiodevice.h \
+		../../../../anaconda3/include/qt/QtCore/qlocale.h \
+		../../../../anaconda3/include/qt/QtCore/qvariant.h \
+		../../../../anaconda3/include/qt/QtCore/qshareddata.h \
+		../../../../anaconda3/include/qt/QtCore/qset.h \
+		../../../../anaconda3/include/qt/QtCore/qcontiguouscache.h \
+		../../../../anaconda3/include/qt/QtCore/qsharedpointer.h \
+		../../../../anaconda3/include/qt/QtCore/qsharedpointer_impl.h \
+		../../../../anaconda3/include/qt/QtNetwork/QNetworkAccessManager \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkaccessmanager.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetworkglobal.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtnetwork-config.h \
+		../../../../anaconda3/include/qt/QtNetwork/qnetworkrequest.h \
+		../../../../anaconda3/include/qt/QtCore/QSharedDataPointer \
+		../../../../anaconda3/include/qt/QtCore/QUrl \
+		../../../../anaconda3/include/qt/QtCore/qurl.h \
+		../../../../anaconda3/include/qt/QtCore/qurlquery.h \
+		../../../../anaconda3/include/qt/QtCore/QVariant \
+		../../../../anaconda3/include/qt/QtCore/QVector \
+		../../../../anaconda3/include/qt/QtNetwork/QSslConfiguration \
+		../../../../anaconda3/include/qt/QtNetwork/qsslconfiguration.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qtcpsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qabstractsocket.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslerror.h \
+		../../../../anaconda3/include/qt/QtNetwork/qsslcertificate.h \
+		../../../../anaconda3/include/qt/QtCore/qcryptographichash.h \
+		../../../../anaconda3/include/qt/QtCore/qdatetime.h \
+		../../../../anaconda3/include/qt/QtNetwork/qssl.h \
+		../../../../anaconda3/include/qt/QtCore/QFlags \
+		../../../../anaconda3/include/qt/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../anaconda3/include/qt/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../anaconda3/include/qt/QtCore/QMetaType \
+		../src/modules/translate/Translator.h \
+		../../../../anaconda3/include/qt/QtGui/QClipboard \
+		../../../../anaconda3/include/qt/QtGui/qclipboard.h \
+		../../../../anaconda3/include/qt/QtGui/qtguiglobal.h \
+		../../../../anaconda3/include/qt/QtGui/qtgui-config.h \
+		../../../../anaconda3/include/qt/QtNetwork
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Translator_deeplx.o ../src/modules/translate/Translator_deeplx.cpp
 
 qhotkey.o: ../src/third_party/QHotkey/qhotkey.cpp ../src/third_party/QHotkey/qhotkey.h \
 		../../../../anaconda3/include/qt/QtCore/QObject \
@@ -4288,8 +4652,11 @@ moc_ChatManager.o: moc_ChatManager.cpp
 moc_TranslateUI.o: moc_TranslateUI.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_TranslateUI.o moc_TranslateUI.cpp
 
-moc_TranslateManager.o: moc_TranslateManager.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_TranslateManager.o moc_TranslateManager.cpp
+moc_Translator.o: moc_Translator.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Translator.o moc_Translator.cpp
+
+moc_Translator_deeplx.o: moc_Translator_deeplx.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Translator_deeplx.o moc_Translator_deeplx.cpp
 
 moc_qhotkey.o: moc_qhotkey.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qhotkey.o moc_qhotkey.cpp
