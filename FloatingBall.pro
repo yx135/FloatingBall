@@ -10,6 +10,12 @@ CONFIG += c++14
 macx {
     QMAKE_MAC_SDK = macosx
     QMAKE_CXXFLAGS += -DQ_OS_MAC
+    LIBS += -framework Carbon
+    LIBS += -framework CoreFoundation
+    LIBS += -framework CoreServices
+    LIBS += -framework AppKit
+    LIBS += -framework CoreGraphics
+    LIBS += -framework Foundation
 }
 
 SOURCES += \
@@ -51,3 +57,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 # 添加以下配置以确保正确链接
 CONFIG += sdk_no_version_check
+
+# 添加 QHotkey 源文件
+SOURCES += \
+    src/third_party/QHotkey/qhotkey.cpp \
+   src/third_party/QHotkey/qhotkey_mac.cpp 
+
+# 添加 QHotkey 头文件
+HEADERS += \
+    src/third_party/QHotkey/qhotkey.h \
+    src/third_party/QHotkey/qhotkey_p.h
+# 添加 QHotkey 包含路径
+INCLUDEPATH +=src/third_party/QHotkey

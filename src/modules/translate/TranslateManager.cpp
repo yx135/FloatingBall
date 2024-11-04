@@ -1,6 +1,5 @@
 #include"TranslateManager.h"
 #include<QtNetwork>
-
 TranslateManager::TranslateManager(QObject *parent)
 :QObject(parent)
 {

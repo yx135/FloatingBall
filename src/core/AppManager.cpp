@@ -1,7 +1,7 @@
 #include "AppManager.h"
 #include "ConfigManager.h"
 #include "EventSystem.h"
-
+#include "../modules/translate/TranslateUI.h"
 AppManager& AppManager::getInstance() {
     static AppManager instance;
     return instance;
@@ -16,7 +16,7 @@ void AppManager::initialize() {
     try {
         eventSystem = std::unique_ptr<EventSystem>(new EventSystem());
         configManager = std::unique_ptr<ConfigManager>(new ConfigManager());
-
+        translateUI = std::unique_ptr<TranslateUI>(new TranslateUI());
         configManager->initialize();
 
         isInitialized = true;
@@ -38,7 +38,7 @@ void AppManager::cleanup() {
     
     configManager.reset();
     eventSystem.reset();
-
+    translateUI.reset();
     isInitialized = false;
     qInfo() << "AppManager cleaned up successfully";
 }

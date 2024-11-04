@@ -4,7 +4,7 @@
 #include"QString"
 #include"QDebug"
 #include<QNetworkAccessManager>
-
+#include <QClipboard>  
 class TranslateManager:public QObject
 {
     Q_OBJECT
@@ -16,7 +16,6 @@ private:
 public:
     void sendTranslate(QString text);
     TranslateManager(QObject *parent = nullptr);
-
 signals:
     void translated(QString text);  
 };

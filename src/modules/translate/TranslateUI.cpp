@@ -4,6 +4,7 @@
 #include<QApplication>
 #include<QScreen>
 #include"TranslateManager.h"
+#include<QClipboard>
 TranslateUI::TranslateUI(QWidget *parent):QWidget(parent)
 {        qDebug()<<"构建翻译";
 
@@ -99,4 +100,18 @@ void TranslateUI::connectButton()
 TranslateUI::~TranslateUI()
 {
 
+}
+void TranslateUI::setTextAndTranslate(const QString& text)
+{
+    originalText->setText(text);
+    translateText();
+}
+void TranslateUI::translateClipboardText()
+{
+   // 获取剪贴板内容
+    QClipboard *clipboard = QApplication::clipboard();
+    QString selectedText = clipboard->text();
+    if (!selectedText.isEmpty()) {
+       setTextAndTranslate(selectedText);
+    }
 }

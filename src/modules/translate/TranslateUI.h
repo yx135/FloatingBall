@@ -10,6 +10,9 @@ class TranslateUI:public QWidget
 public:
     TranslateUI(QWidget *parent = nullptr);
     ~TranslateUI();
+    void setTextAndTranslate(const QString& text);
+    void translateClipboardText(); 
+
 private:
     TranslateManager* m_translateManager = nullptr;
 protected:

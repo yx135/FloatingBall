@@ -5,10 +5,16 @@
 #include <QApplication>
 #include <QDebug>
 #include<QMenu>
+#include <QWindow>
+#include<QThread>
+#ifdef Q_OS_MAC
+#include <objc/message.h>
+#include <objc/runtime.h>
+#endif
 FloatingBall::FloatingBall(QWidget *parent) : QWidget(parent) {
     setupUI();
     setupButtons();
-    
+    setupGlobalShortcuts();
     
     // 连接截图按钮
     connect(screenshotButton, &QPushButton::clicked, [this](){
@@ -337,5 +343,78 @@ QString FloatingBall::readStyleFromFile(const QString &filePath)
     }
     
     return styleSheet;
+}
+
+
+//全局快捷键
+void FloatingBall::setupGlobalShortcuts()
+{
+    qDebug() << "设置全局快捷键";
+    screenShortcut = new QHotkey(QKeySequence("Ctrl+Shift+P"),true, this);
+    chatHotkey = new QHotkey(QKeySequence("Ctrl+Shift+C"), true, this);
+    translateHotkey = new QHotkey(QKeySequence("Ctrl+Shift+T"), true, this);
+    //截图快捷键
+    connect(screenShortcut, &QHotkey::activated, [this]() {
+        qDebug() << "触发截图键";
+        screenshotManager = new ScreenshotManager(this);
+        screenshotManager->startScreenshot();
+    });
+
+    //聊天快捷键
+    connect(chatHotkey, &QHotkey::activated, [this]() {
+        qDebug() << "触发聊天键";
+        ChatManager* chatWindow = new ChatManager();
+        chatWindow->setAttribute(Qt::WA_DeleteOnClose);
+        chatWindow->show();
+    });
+
+    //翻译快捷键
+    connect(translateHotkey, &QHotkey::activated, [this]() {
+        qDebug() << "触发翻译键";
+        QClipboard *clipboard = QApplication::clipboard();
+        QString originalText = clipboard->text();
+        this->copyTextToClipboard();
+        // 给一点时间让复制操作完成
+        QTimer::singleShot(100, [this, originalText]() {
+            QString newText = QApplication::clipboard()->text();
+            
+            if (auto translateUI = AppManager::getInstance().getTranslateUI()) {
+                translateUI->show();
+                if (!newText.isEmpty()) {
+                    translateUI->translateClipboardText();
+                } else {
+                    qDebug() << "没有检测到选中的文本";
+                }
+            } else {
+                qDebug() << "获取翻译UI失败";
+            }
+            
+            // 如果需要，可以恢复原始剪贴板内容
+             QApplication::clipboard()->setText(originalText);
+        });
+    });
+}
+
+void FloatingBall::copyTextToClipboard()
+{
+#ifdef Q_OS_MAC
+// 使用剪贴板来复制选中的文本
+    // 使用 pbpaste 命令获取选中的文本
+    QProcess process;
+    process.start("pbpaste");
+    process.waitForFinished();
+    QString selectedText = QString::fromUtf8(process.readAllStandardOutput());
+
+    qDebug() << "获取到的文本:" << selectedText;
+#elif defined(Q_OS_WIN)
+    // Windows 特定的复制命令
+    keybd_event(VK_CONTROL, 0, 0, 0);
+    keybd_event('C', 0, 0, 0);
+    keybd_event('C', 0, KEYEVENTF_KEYUP, 0);
+    keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);
+#elif defined(Q_OS_LINUX)
+    // Linux 特定的复制命令
+    system("xdotool key ctrl+c");
+#endif
 }
 

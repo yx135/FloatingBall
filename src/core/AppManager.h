@@ -13,6 +13,7 @@ AppManager 是应用程序的核心管理器，负责初始化和管理各个模
 
 class ConfigManager;
 class EventSystem;
+class TranslateUI;
 
 class AppManager {
 public:
@@ -23,7 +24,7 @@ public:
     
     ConfigManager* getConfigManager() const { return configManager.get(); }
     EventSystem* getEventSystem() const { return eventSystem.get(); }
-
+    TranslateUI* getTranslateUI() const { return translateUI.get(); }
 private:
     AppManager() = default;
     ~AppManager() = default;
@@ -32,6 +33,6 @@ private:
 
     std::unique_ptr<ConfigManager> configManager;
     std::unique_ptr<EventSystem> eventSystem;
-    
+    std::unique_ptr<TranslateUI> translateUI;
     bool isInitialized = false;
 };

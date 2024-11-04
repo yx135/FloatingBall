@@ -10,12 +10,16 @@
 #include <QProcess>
 #include <QFile>
 #include <QTextStream>
+#include<QShortcut>
+#include<QHotkey>
 #include "../core/AppManager.h"
 #include "../core/ConfigManager.h" 
 #include "../modules/chat/ChatManager.h" // 添加这行来包含 ChatManager 的头文件
 #include "../modules/screenshot/ScreenshotManager.h"
 #include "SettingsDialog.h"
 #include "../modules/translate/TranslateUI.h"
+#include "../modules/translate/TranslateManager.h"
+
 class ScreenshotManager;  // 前向声明
 
 class FloatingBall : public QWidget {
@@ -73,4 +77,10 @@ private:
      //ScreenshotSelector* screenshotSelector = nullptr;
     QString readStyleFromFile(const QString &filePath);
 
+    //快捷键
+    QHotkey* translateHotkey;
+    QHotkey* screenShortcut;
+    QHotkey* chatHotkey;
+    void setupGlobalShortcuts();
+    void copyTextToClipboard();
 };
