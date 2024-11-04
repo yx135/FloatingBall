@@ -170,6 +170,7 @@ void ChatManager::sendMessage()
 void ChatManager::createNewChat()
 {
     saveCurrentChat();
+    updateApiConfig();
     currentChatId = QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
     chatHistories[currentChatId] = QJsonArray();
     chatHistory = QJsonArray();
@@ -180,9 +181,8 @@ void ChatManager::createNewChat()
     // 添加欢迎消息
     QString welcomeMessage = "欢迎开始新的对话！";
     chatTextEdit->append("系统: " + welcomeMessage);
-    chatHistory.append(QJsonObject{{"role", "system"}, {"content", welcomeMessage}});
-    updateApiConfig();   
-    sendPromptMessageToAI();
+    chatHistory.append(QJsonObject{{"role", "system"}, {"content", welcomeMessage+m_prompt}}); 
+    //sendPromptMessageToAI();
 }
 void ChatManager::loadChat(const QString &chatId)
 {
@@ -200,11 +200,10 @@ void ChatManager::loadChat(const QString &chatId)
 
 void ChatManager::sendPromptMessageToAI( )
 {
-   // QString prompt = config->getValue("aichat/prompt", "你是一个有帮助的AI助手。");
-    chatTextEdit->append("系统: " +m_prompt);
-    chatHistory.append(QJsonObject{{"role", "system"}, {"content", m_prompt}});
-    //chatHistories[currentChatId] = chatHistory;
-    sendMessageToAI(m_prompt);
+   
+  
+
+   
 }
 void ChatManager::sendMessageToAI(const QString &message)
 {
@@ -221,11 +220,11 @@ void ChatManager::sendMessageToAI(const QString &message)
     QJsonObject json;
     json["model"] = this->model->currentText();
     QJsonArray messages= chatHistory;
-    messages.append(QJsonObject{{"role", "user"}, {"content", message}});
+    //messages.append(QJsonObject{{"role", "user"}, {"content", message}});
     json["messages"] = messages;
 
     currentReply = networkManager->post(request, QJsonDocument(json).toJson());
-        qDebug()<<"已经发送";
+        qDebug()<<"已经发送"<<json;
     connect(currentReply, &QNetworkReply::finished, this, &ChatManager::handleAIResponse);
     connect(currentReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleNetworkError(QNetworkReply::NetworkError)));
 

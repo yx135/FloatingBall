@@ -40,6 +40,6 @@ private:
     //默认配置
    QString default_apiKey = "sk-adfrHgGRxcyfISG90135D10cEc824f14B1A15cA1Cd357a36-73";
     QString default_apiEndpoint = "https://oneapidev.onrender.com/v1/chat/completions";
-    QString default_aichatPrompt = "你是一个有帮助的AI助手。";
+    QString default_aichatPrompt = "你是一个有帮助的AI助手,请用中文回答问题，对于这句话无需向我回复";
 
 };

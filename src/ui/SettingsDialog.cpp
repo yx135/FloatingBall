@@ -91,9 +91,13 @@ void SettingsDialog::saveSettings() {
     //config->setValue(ConfigKeys::APPEARANCE_OPACITY, opacitySlider->value() / 100.0f);
     
     // 保存 AI Chat 设置
+    qDebug()<<"保存配置";
     config->setValue("aichat/api_key", aichat_api_key->toPlainText());
     config->setValue("aichat/api_endpoint", aichat_api_endpoint->toPlainText());
-    config->setValue("aicht/prompt",aichat_Prompt->toPlainText());
+    config->setValue("aichat/prompt",aichat_Prompt->toPlainText());
+    qDebug()<<aichat_Prompt->toPlainText();
+    qDebug()<<config->getValue("aichat/prompt",QString());
+    qDebug()<<"保存配置完成";
    
     accept();
 }
