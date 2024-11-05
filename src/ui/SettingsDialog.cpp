@@ -21,10 +21,9 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent) {
     aichat_api_endpoint->setFixedHeight(80);
     aichat_Prompt = new QTextEdit(this);
     aichat_Prompt->setFixedHeight(80);
-    //aichat_api_key->setLineWrapMode(QTextEdit::NoWrap);
-    //aichat_api_endpoint->setLineWrapMode(QTextEdit::NoWrap);
-
-    
+    //翻译设置
+    translator_deeplx_api = new QTextEdit(this);
+    translator_deeplx_api->setFixedHeight(50);
     setupUI();
     loadSettings();
 }
@@ -39,7 +38,7 @@ void SettingsDialog::setupUI() {
     categoryList->setFixedWidth(80);
     categoryList->addItem(tr("常规"));
     categoryList->addItem(tr("AI Chat"));
-    
+    categoryList->addItem(tr("翻译"));
     // 创建常规窗口
     QWidget* generalPage = new QWidget(this);
     QFormLayout* generalLayout = new QFormLayout(generalPage);
@@ -55,6 +54,14 @@ void SettingsDialog::setupUI() {
     chatLayout->addRow(tr("AI Chat API 端点:"), aichat_api_endpoint);
     chatLayout->addRow(tr("提示词:"),aichat_Prompt);
     stackedWidget->addWidget(chatSettingsPage);
+
+    // 添加翻译设置页面
+    QWidget* translateSettingsPage = new QWidget(this);
+    QFormLayout* translateLayout = new QFormLayout(translateSettingsPage);
+    translateLayout->addRow(tr("DeepL API Key:"), translator_deeplx_api);
+    stackedWidget->addWidget(translateSettingsPage);
+    translateLayout->setContentsMargins(0,0,0,0);
+    translateSettingsPage->setContentsMargins(0,0,0,0);
     
     // 创建水平布局
     QHBoxLayout* horizontalLayout = new QHBoxLayout;
@@ -80,7 +87,6 @@ void SettingsDialog::setupUI() {
     categoryList->setCurrentRow(0);
 }
 void SettingsDialog::saveSettings() {
-    ConfigManager* config = AppManager::getInstance().getConfigManager();
     if (!config) {
         qWarning() << "ConfigManager is not initialized";
         return;
@@ -95,30 +101,38 @@ void SettingsDialog::saveSettings() {
     config->setValue("aichat/api_key", aichat_api_key->toPlainText());
     config->setValue("aichat/api_endpoint", aichat_api_endpoint->toPlainText());
     config->setValue("aichat/prompt",aichat_Prompt->toPlainText());
-    qDebug()<<aichat_Prompt->toPlainText();
-    qDebug()<<config->getValue("aichat/prompt",QString());
+
+    // 保存翻译设置
+    config->setValue("translator/deeplx_api",translator_deeplx_api->toPlainText());
     qDebug()<<"保存配置完成";
-   
+    config->sync();
     accept();
 }
 
 void SettingsDialog::loadSettings() {
     qDebug()<<"开始加载配置...";
-    ConfigManager* config = AppManager::getInstance().getConfigManager();
+    config = AppManager::getInstance().getConfigManager();
     if (!config) {
         qWarning() << "ConfigManager is not initialized";
         return;
     }
+    qDebug()<<"加载配置";
     
     //shortcutEdit->setText(config->getValue(ConfigKeys::SHORTCUT_TOGGLE, QString("Ctrl+Shift+F")));
     //startupCheck->setChecked(config->getValue(ConfigKeys::GENERAL_STARTUP, false));
     //opacitySlider->setValue(config->getValue(ConfigKeys::APPEARANCE_OPACITY, 0.4) * 100);
     
-    // 加载 AI Chat 设置
-    //qDebug()<<"aichat/api_key:"<<config->getValue("aichat/api_key", QString());
-    //qDebug()<<"aichat/api_endpoint:"<<config->getValue("aichat/api_endpoint",QString());
     aichat_api_key->setText(config->getValue("aichat/api_key", QString()));
     aichat_api_endpoint->setText(config->getValue("aichat/api_endpoint",QString()));
     aichat_Prompt->setText(config->getValue("aichat/prompt",QString()));
+    translator_deeplx_api->setText(config->getValue("translator/deeplx_api",QString()));
     qDebug()<<"加载配置完成";
+}
+void SettingsDialog::setDefaultConfig() 
+{
+    config->setValue("aichat/api_key", default_apiKey);
+    config->setValue("aichat/api_endpoint", default_apiEndpoint);
+    config->setValue("aichat/prompt", default_aichatPrompt);
+    config->setValue("translator/deeplx_api", default_deeplx_api);
+    config->sync();
 }

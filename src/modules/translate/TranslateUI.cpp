@@ -5,6 +5,9 @@
 #include<QScreen>
 #include<QClipboard>
 #include<QLabel>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 TranslateUI::TranslateUI(QWidget *parent):QWidget(parent)
 {        qDebug()<<"构建翻译";
 
@@ -67,7 +70,7 @@ void TranslateUI::setupUI()
     layout->setContentsMargins(5, 0, 5, 0);
     layout->setSpacing(1);
 
-    //设置���局
+    //设置局
 
     //移动到屏幕右下角
     // 修改移动到屏幕右下角的代码
@@ -106,8 +109,27 @@ void TranslateUI::translateText()
     // 连接信号槽
     connect(m_translateManager, &Translator::translated,
             this, [this](const QString &text){
-                translatedText->append(text);
-            });
+                qDebug()<<text;
+
+                QJsonDocument doc = QJsonDocument::fromJson(text.toUtf8());
+                QJsonObject jsonObj = doc.object();
+                
+                // 获取翻译结果
+                QString translatedData = jsonObj.value("data").toString();
+                
+                // 正确处理alternatives数组
+                QJsonArray alternatives = jsonObj.value("alternatives").toArray();
+                QString translatedOther;
+                for(const QJsonValue &alt : alternatives) {
+                    translatedOther += alt.toString() + " ";
+                }
+                
+                qDebug()<<translatedData<<" "<<translatedOther;
+                translatedText->append(translatedData);
+                if(!translatedOther.isEmpty()) {
+                    translatedText->append("备选翻译: " + translatedOther);
+                }
+            },Qt::AutoConnection);
     
     // 发送翻译请求
     m_translateManager->sendTranslate(text,target_lang_text);

@@ -1,9 +1,9 @@
 #include"Translator_deeplx.h"
 #include<QtNetwork>
+#include"../../core/ConfigManager.h"
 Translator_deeplx::Translator_deeplx()
-
 {
-
+    this->apiUrl = config->getValue("translator/deeplx_api",QString());
 }
 
 void Translator_deeplx::sendTranslate(QString text,QString target_lang)
@@ -24,9 +24,7 @@ void Translator_deeplx::sendTranslate(QString text,QString target_lang)
     {
         QString response = reply->readAll();
         qDebug()<<"翻译响应成功："<<response;
-        QJsonDocument doc = QJsonDocument::fromJson(response.toUtf8());
-        QString translatedText = doc.object()["data"].toString();
-        emit translated(translatedText);
+        emit translated(response);
     }
     else
     {

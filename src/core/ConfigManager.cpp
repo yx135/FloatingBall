@@ -12,22 +12,13 @@ ConfigManager::~ConfigManager() {
 
 void ConfigManager::initialize() {
     qDebug() << "Initializing ConfigManager";
-
-    // 设置默认配置
-    if (!settings.contains("aichat/api_key")) {
-        settings.setValue("aichat/api_key", default_apiKey);
-    }
-    if (!settings.contains("aichat/api_endpoint")) {
-        settings.setValue("aichat/api_endpoint", default_apiEndpoint);
-    }
-    if (!settings.contains("aichat/prompt")) {
-        settings.setValue("aichat/prompt", default_aichatPrompt);
-    }
-    settings.sync();
     qDebug()<<"Initializing ConfigManager 完成";
 }
 
 void ConfigManager::cleanup() {
     qDebug() << "Cleaning up ConfigManager";
+    settings.sync();
+}
+void ConfigManager::sync() {
     settings.sync();
 }

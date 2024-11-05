@@ -5,7 +5,7 @@
 #include <QPushButton>
 #include<QComboBox>
 #include"Translator.h"
-#include"AppManager.h"
+#include"../../core/AppManager.h"
 class TranslateUI:public QWidget
 {
     Q_OBJECT

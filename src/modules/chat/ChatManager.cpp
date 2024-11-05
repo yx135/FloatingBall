@@ -182,7 +182,6 @@ void ChatManager::createNewChat()
     QString welcomeMessage = "欢迎开始新的对话！";
     chatTextEdit->append("系统: " + welcomeMessage);
     chatHistory.append(QJsonObject{{"role", "system"}, {"content", welcomeMessage+m_prompt}}); 
-    //sendPromptMessageToAI();
 }
 void ChatManager::loadChat(const QString &chatId)
 {

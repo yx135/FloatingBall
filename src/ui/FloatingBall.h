@@ -67,7 +67,8 @@ private:
      QString toggleShortcut = "Ctrl+Shift+F";
      void applySettings();
      void showSettings();
-    void updateGlobalShortcuts();
+     void updateGlobalShortcuts();
+     void initConfig();
      //系统托盘
      QSystemTrayIcon* trayIcon = nullptr;
      void createTrayIcon();

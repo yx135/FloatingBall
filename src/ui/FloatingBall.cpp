@@ -15,6 +15,7 @@ FloatingBall::FloatingBall(QWidget *parent) : QWidget(parent) {
     setupUI();
     setupButtons();
     setupGlobalShortcuts();
+    initConfig();
     
     // 连接截图按钮
     connect(screenshotButton, &QPushButton::clicked, [this](){
@@ -418,3 +419,11 @@ void FloatingBall::copyTextToClipboard()
 #endif
 }
 
+void FloatingBall::initConfig() {
+    SettingsDialog * settingsDialog = new SettingsDialog(this);
+    if (!settingsDialog) {
+        qWarning() << "SettingsDialog is not initialized";
+        return;
+    }
+    settingsDialog->setDefaultConfig();
+}
