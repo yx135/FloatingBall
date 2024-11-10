@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     if (styleFile.open(QFile::ReadOnly | QFile::Text)) {
         QTextStream stream(&styleFile);
         QString style = stream.readAll();
-        //qDebug() << "样式表内容:" << style;
+        qDebug() << "样式表内容:";
         app.setStyleSheet(style);
         styleFile.close();
     } else {

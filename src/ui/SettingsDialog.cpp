@@ -24,6 +24,10 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent) {
     //翻译设置
     translator_deeplx_api = new QTextEdit(this);
     translator_deeplx_api->setFixedHeight(50);
+    translator_ai_apiKey = new QTextEdit(this);
+    translator_ai_apiKey->setFixedHeight(50);
+    translator_ai_apiEndpoint = new QTextEdit(this);
+    translator_ai_apiEndpoint->setFixedHeight(50);
     setupUI();
     loadSettings();
 }
@@ -59,6 +63,8 @@ void SettingsDialog::setupUI() {
     QWidget* translateSettingsPage = new QWidget(this);
     QFormLayout* translateLayout = new QFormLayout(translateSettingsPage);
     translateLayout->addRow(tr("DeepL API Key:"), translator_deeplx_api);
+    translateLayout->addRow(tr("AI 端点:"), translator_ai_apiEndpoint);
+    translateLayout->addRow(tr("AI key:"), translator_ai_apiKey);
     stackedWidget->addWidget(translateSettingsPage);
     translateLayout->setContentsMargins(0,0,0,0);
     translateSettingsPage->setContentsMargins(0,0,0,0);
@@ -104,6 +110,8 @@ void SettingsDialog::saveSettings() {
 
     // 保存翻译设置
     config->setValue("translator/deeplx_api",translator_deeplx_api->toPlainText());
+    config->setValue("translator/ai_api_key",translator_ai_apiKey->toPlainText());
+    config->setValue("translator/ai_api_endpoint",translator_ai_apiEndpoint->toPlainText());
     qDebug()<<"保存配置完成";
     config->sync();
     accept();
@@ -126,13 +134,17 @@ void SettingsDialog::loadSettings() {
     aichat_api_endpoint->setText(config->getValue("aichat/api_endpoint",QString()));
     aichat_Prompt->setText(config->getValue("aichat/prompt",QString()));
     translator_deeplx_api->setText(config->getValue("translator/deeplx_api",QString()));
+    translator_ai_apiKey->setText(config->getValue("translator/ai_api_key",QString()));
+    translator_ai_apiEndpoint->setText(config->getValue("translator/ai_api_endpoint",QString()));
     qDebug()<<"加载配置完成";
 }
 void SettingsDialog::setDefaultConfig() 
 {
-    config->setValue("aichat/api_key", default_apiKey);
-    config->setValue("aichat/api_endpoint", default_apiEndpoint);
-    config->setValue("aichat/prompt", default_aichatPrompt);
+    config->setValue("aichat/api_key", default_aichat_apiKey);
+    config->setValue("aichat/api_endpoint", default_aichat_apiEndpoint);
+    config->setValue("aichat/prompt", default_aichat_Prompt);
     config->setValue("translator/deeplx_api", default_deeplx_api);
+    config->setValue("translator/ai_api_key", default_translate_ai_apiKey);
+    config->setValue("translator/ai_api_endpoint", default_translate_ai_apiEndpoint);
     config->sync();
 }

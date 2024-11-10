@@ -31,7 +31,8 @@ SOURCES += \
     src/modules/chat/ChatManager.cpp \
     src/modules/translate/TranslateUI.cpp \
     src/modules/translate/Translator.cpp \
-    src/modules/translate/Translator_deeplx.cpp
+    src/modules/translate/Translator_deeplx.cpp \
+    src/modules/translate/Translator_ai.cpp
 HEADERS += \
     src/core/AppManager.h \
     src/core/ModuleBase.h \
@@ -44,7 +45,8 @@ HEADERS += \
     src/modules/chat/ChatManager.h \
     src/modules/translate/TranslateUI.h \
     src/modules/translate/Translator.h \
-    src/modules/translate/Translator_deeplx.h
+    src/modules/translate/Translator_deeplx.h \
+    src/modules/translate/Translator_ai.h
 
 INCLUDEPATH += \
     src \

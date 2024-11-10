@@ -100,6 +100,8 @@ void TranslateUI::translateText()
     }
     //获取目标语言
     QString target_lang_text = target_lang->currentText();
+    //获取翻译器
+    QString translator_text = translator->currentText();
     // 创建翻译管理器并保存为成员变量，避免内存泄漏
     if (m_translateManager) {
         m_translateManager->deleteLater();//删除翻译管理器
@@ -132,7 +134,7 @@ void TranslateUI::translateText()
             },Qt::AutoConnection);
     
     // 发送翻译请求
-    m_translateManager->sendTranslate(text,target_lang_text);
+    m_translateManager->sendTranslate(text,target_lang_text,translator_text);
 }
 
 void TranslateUI::connectButton()
@@ -172,7 +174,7 @@ void TranslateUI::initTargetLang()
 void TranslateUI::initTranslator()
 {
     translator_list.append("deeplx");
-    translator_list.append("AI");
+    translator_list.append("gpt-4o");
     translator->addItems(translator_list);
 
 }

@@ -46,5 +46,9 @@ Translator* AppManager::getTranslator(QString translator_name)
     {
         translator = std::unique_ptr<Translator>(new Translator_deeplx());
     }
+    else 
+    {
+        translator = std::unique_ptr<Translator>(new Translator_ai());
+    }
     return translator.get();
 }

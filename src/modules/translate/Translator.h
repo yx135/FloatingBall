@@ -29,7 +29,7 @@ protected:
     
 public:
     explicit Translator(QObject *parent = nullptr);
-    virtual void sendTranslate(QString text, QString target_lang) = 0;
+    virtual void sendTranslate(QString text, QString target_lang,QString modelename) = 0;
 
 signals:
     void translated(QString text); 

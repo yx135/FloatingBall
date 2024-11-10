@@ -6,7 +6,7 @@ Translator_deeplx::Translator_deeplx()
     this->apiUrl = config->getValue("translator/deeplx_api",QString());
 }
 
-void Translator_deeplx::sendTranslate(QString text,QString target_lang)
+void Translator_deeplx::sendTranslate(QString text,QString target_lang,QString modelname)
 {   
     qDebug()<<"发送翻译请求";
    QNetworkRequest request;

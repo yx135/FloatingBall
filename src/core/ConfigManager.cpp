@@ -11,8 +11,8 @@ ConfigManager::~ConfigManager() {
 }
 
 void ConfigManager::initialize() {
-    qDebug() << "Initializing ConfigManager";
     qDebug()<<"Initializing ConfigManager 完成";
+    qDebug() << settings.fileName();
 }
 
 void ConfigManager::cleanup() {

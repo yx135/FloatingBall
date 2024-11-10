@@ -14,7 +14,7 @@ private:
     QString apiUrl = "";
 public:
     explicit Translator_deeplx();
-    void sendTranslate(QString text, QString target_lang) override;
+    void sendTranslate(QString text, QString target_lang,QString modelename ="") override;
 };
 
 #endif // TRANSLATOR_DEEPLX_H

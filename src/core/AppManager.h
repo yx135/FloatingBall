@@ -16,6 +16,7 @@ AppManager 是应用程序的核心管理器，负责初始化和管理各个模
 #include "../modules/translate/TranslateUI.h"
 #include "../modules/translate/Translator.h"
 #include "../modules/translate/Translator_deeplx.h"
+#include "../modules/translate/Translator_ai.h"
 class ConfigManager;
 class EventSystem;
 class TranslateUI;
